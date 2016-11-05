@@ -1,0 +1,69 @@
+<div class="container">    
+    <h2>Ultimas Facturas</h2>
+    <hr>    
+    {{listas[1]}}
+    <table class="table table-hover table-sm">
+        <thead class="thead-default">
+            <tr>
+                <th>#Item</th>
+                <th>Serv</th>
+                <th>Fecha</th>
+                <th>Cliente</th>                
+                <th>Clase</th>                
+                <th>Pago</th>                
+                <th>Cajero</th>                
+                <th class="text-xs-right">Dscuent</th>                
+                <th class="text-right">Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="lista in listas">
+                <th scope="row">{{$index + 1 }} </th>
+                <td>{{lista[13]}}</td>
+                <td>{{lista[14] | date:'yyyy-MM-dd'}}</td>
+                <td>{{lista[15].substr(0, 15) |  lowercase}}</td>
+                <td>{{lista[16]}}</td>
+                <td>{{lista[17]}}</td>
+                <td>{{lista[18]}}</td>
+                <td class="text-xs-right">{{lista[19] | number:2}}</td>
+                <td class="text-xs-right">{{lista[20] | number:2}} <span ng-if="!lista[20]">0.00</span></td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary btn-sm active" data-toggle="modal" data-target="#myModal" ng-click="detalle(lista)">
+                            <i class="fa fa-eye"></i> Ver
+                        </button>                        
+                        <button type="button" class="btn btn-secondary btn-sm active">
+                            <i class="fa fa-pencil"></i> Editar
+                        </button>                        
+                        <button type="button" class="btn btn-secondary btn-sm active">
+                            <i class="fa fa-trash"></i> Eliminar
+                        </button>                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Factura</h4>
+            </div>
+            <div class="modal-body">
+                {{documento}}                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="descargar(documento)">Save changes</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+</div>

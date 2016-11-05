@@ -1,0 +1,64 @@
+<div class="container">	
+	<table class="table table-striped">
+		<tr>
+			<th class="text-xs-center">#</th>
+			<th class="text-xs-right">Num</th>
+			<th>Fecha</th>
+			<th>Razon</th>
+			<th>Clase</th>
+			<th>Tipo</th>
+            <th>Unica</th>
+			<th class="text-xs-right">Total</th>
+			<th class="text-xs-right">Acciones</th>
+		</tr>
+		<tr ng-repeat="documento in documentos">			
+			<td class="text-xs-center">{{$index + 1}}</td>
+			<td class="text-xs-right">{{documento[0]}}</td> 
+			<td>{{documento[1] | date:'dd-MM-yyyy'}}</td>			
+			<td>{{documento[2].substr(0, 25)}}</td>
+			<td>{{documento[3]}}</td>
+			<td>{{documento[4]}}</td>
+            <td>{{documento[5]}}</td>
+			<td class="text-xs-right">{{ documento[6] | number:2 }}</td>
+			<td class="text-xs-right">
+				<div class="btn-group" role="group" aria-label="Basic example">
+                    <button 
+                    type="button" 
+                    class="btn btn-secondary btn-sm active" 
+                    data-toggle="modal" 
+                    data-target="#myModal" 
+                    ng-click="ver(documento[0],documento[3],documento[5])">
+                    	<i class="fa fa-eye"></i> Ver
+                    </button>
+                    <!-- 
+                    <button type="button" class="btn btn-secondary btn-sm active">
+                    	<i class="fa fa-trash"></i> Eliminar
+                    </button>
+                    -->
+                </div>
+			</td>
+		</tr>
+	</table>
+	<!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Factura</h4>
+            </div>
+            <div class="modal-body">
+                {{documento}}
+                {{fb_detalle_servicios}}
+                {{fb_detalle_repuestos}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="descargar(documento)">Save changes</button>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

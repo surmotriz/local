@@ -1,0 +1,4 @@
+node_modules/
+dbconfig.js
+**/.DS_Store
+**/._*
