@@ -20,7 +20,9 @@ router.get('/documentos', function(req, res){
             'CDG_CLA_DOC, '+ // 3
             'CDG_CO_CR, '+     // 4
             'CDG_TIPO_FACTURA, '+ // 5
-            'CDG_VVP_TOT '+ // 6            
+            'CDG_VVP_TOT, '+ // 6            
+            '(select count(*) from DET_DOC_SER where dds_num_doc=cdg_num_doc) as CDG_SERVICIOS, '+ // 7
+            '(select count(*) from DET_DOC_REP where ddr_num_doc=cdg_num_doc) as CDG_REPUESTOS, '+ // 8
             'from cab_doc_gen where cdg_cod_gen=\'02\' and cdg_cod_emp=\'01\' order by CDG_FEC_GEN Desc',
             {} ,
             { outFormat: oracledb.ARRAY } ,
@@ -51,7 +53,7 @@ router.get('/documentos_fb_cabezera/:num_doc/:cla_doc/', function(req, res){
 });
 
 // factura o boleta servicios detalle
-router.get('/documentos_fb_detalle_servicios/:num_doc/:cla_doc', function(req, res){
+router.get('/documentos_fb_detalle_servicios/:num_doc/:cla_doc/:tipo_factura', function(req, res){
     oracledb.getConnection(dconexion, function (err, conexion) {
         conexion.execute(
             'select * from DET_DOC_SER where DDS_COD_GEN=\'02\' and DDS_COD_EMP=\'01\' and DDS_NUM_DOC=:num_doc and DDS_CLA_DOC=:cla_doc',            
@@ -68,7 +70,7 @@ router.get('/documentos_fb_detalle_servicios/:num_doc/:cla_doc', function(req, r
 });
 
 // factura o boleta repuestos detalle
-router.get('/documentos_fb_detalle_repuestos/:num_doc/:cla_doc', function(req, res){
+router.get('/documentos_fb_detalle_repuestos/:num_doc/:cla_doc/:tipo_factura', function(req, res){
     oracledb.getConnection(dconexion, function (err, conexion) {
         conexion.execute(
             'select * from DET_DOC_REP where DDR_COD_GEN=\'02\' and DDR_COD_EMP=\'01\' and DDR_NUM_DOC=:num_doc and DDR_CLA_DOC=:cla_doc',            

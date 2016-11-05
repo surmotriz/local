@@ -8,6 +8,7 @@ app.controller('documentosIndexCtlr', function($scope, $http){
 		$scope.cla_doc = cla_doc;
 		$scope.tipo_factura = tipo_factura;		
 
+		/*
 		if(cla_doc=='FS' || cla_doc=='FR' || cla_doc=='BS' || cla_doc=='BR'){ // Factura y Boleta
 			// cabezera
 			$http.get( '/apis/documentos_fb_cabezera/'+num_doc+'/'+cla_doc+'/').success(function(data){
@@ -35,7 +36,7 @@ app.controller('documentosIndexCtlr', function($scope, $http){
 		}else{ // Nota de Credito
 			console.log('Nota de Credito');
 		}
-
+		*/
 		console.log(Object.keys($scope.fb_detalle_servicios).length);
 		console.log(Object.keys($scope.fb_detalle_repuestos).length);
 
