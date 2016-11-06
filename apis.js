@@ -7,7 +7,7 @@ var dbConfig = require('./dbconfig.js');
 var dconexion = {
     user          : dbConfig.user,
     password      : dbConfig.password,
-    connectString : dbConfig.connectString    
+    connectString : dbConfig.connectString     
 }
 
 router.get('/documentos', function(req, res){
