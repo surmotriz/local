@@ -44,7 +44,8 @@ router.get('/fb_cab/:num_doc/:cla_doc/', function(req, res){
             'CDG_IMP_NETO as imp_neto, '+  // 5
             'CDG_TIPO_FACTURA AS tipo_factura, '+ // 6
             '(select count(*) from DET_DOC_SER where dds_cod_gen=cdg_cod_gen and dds_cod_emp=cdg_cod_emp and dds_cla_doc=cdg_cla_doc and  dds_num_doc=cdg_num_doc) as ser, '+ // 7 Servicos
-            '(select count(*) from DET_DOC_REP where ddr_cod_gen=cdg_cod_gen and ddr_cod_emp=cdg_cod_emp and ddr_cla_doc=cdg_cla_doc and  ddr_num_doc=cdg_num_doc) as rep '+ // 8 Repuestos
+            '(select count(*) from DET_DOC_REP where ddr_cod_gen=cdg_cod_gen and ddr_cod_emp=cdg_cod_emp and ddr_cla_doc=cdg_cla_doc and  ddr_num_doc=cdg_num_doc) as rep, '+ // 8 Repuestos
+            '\'20532710066\' || \'-\' || decode(cdg_tip_doc,\'F\',\'01\',\'B\',\'03\',\'A\',\'07\',\'0\') || \'-\' || lpad(cdg_ser_doc,4,0) || \'-\'|| lpad(cdg_num_doc,8,0) as nombre '+ // 9 Nombre
             'from CAB_DOC_GEN WHERE CDG_NUM_DOC=:num_doc and CDG_CLA_DOC=:cla_doc',
             { 
                 num_doc: { val: req.params.num_doc },
