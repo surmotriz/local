@@ -8,18 +8,20 @@
 			<th>Clase</th>
 			<th>Tipo</th>
             <th>Unica</th>
+            <th>Imp</th>
 			<th class="text-xs-right">Total</th>
 			<th class="text-xs-right">Acciones</th>
 		</tr>
 		<tr ng-repeat="documento in documentos">			
 			<td class="text-xs-center">{{$index + 1}}</td>
-			<td class="text-xs-right">{{documento[0]}}</td> 
-			<td>{{documento[1] | date:'dd-MM-yyyy'}}</td>			
-			<td>{{documento[2].substr(0, 25)}}</td>
-			<td>{{documento[3]}}</td>
-			<td>{{documento[4]}}</td>
-            <td>{{documento[5]}}</td>
-			<td class="text-xs-right">{{ documento[6] | number:2 }}</td>
+			<td class="text-xs-right">{{documento[0]}}</td>  <!-- 0. Num  -->
+			<td>{{documento[1] | date:'dd-MM-yyyy'}}</td>    <!-- 1. Fecha  -->			
+			<td>{{documento[2].substr(0, 25)}}</td>  <!-- 2. Razon  -->
+			<td>{{documento[3]}}</td>   <!-- 3. Clase (FS,FR,BR,BS,AR,AS) -->
+			<td>{{documento[4]}}</td>   <!-- 4. Co_cr (CO,CR,AN) -->
+            <td>{{documento[5]}}</td>   <!-- 5. Unica (1,0) -->
+            <td>{{documento[6]}}</td>   <!-- 6. Imp (D,R) -->
+			<td class="text-xs-right">{{ documento[7] | number:2 }}</td>     <!-- 7. Total -->
 			<td class="text-xs-right">
 				<div class="btn-group" role="group" aria-label="Basic example">
                     <button 
@@ -27,7 +29,7 @@
                     class="btn btn-secondary btn-sm active" 
                     data-toggle="modal" 
                     data-target="#myModal" 
-                    ng-click="ver(documento[0],documento[3],documento[5])">
+                    ng-click="ver(documento[0],documento[3],documento[4],documento[6])">
                     	<i class="fa fa-eye"></i> Ver
                     </button>
                     <!-- 
@@ -50,9 +52,7 @@
                 <h4 class="modal-title" id="myModalLabel">Factura</h4>
             </div>
             <div class="modal-body">
-                {{documento}}
-                {{fb_detalle_servicios}}
-                {{fb_detalle_repuestos}}
+                {{fb_cab}}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

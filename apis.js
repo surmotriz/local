@@ -14,15 +14,14 @@ router.get('/documentos', function(req, res){
     oracledb.getConnection(dconexion, function (err, conexion) {
         conexion.execute(
             'select '+
-            'CDG_NUM_DOC, '+ // 0
-            'CDG_FEC_GEN, '+ // 1
-            'CDG_NOM_CLI, '+ // 2
-            'CDG_CLA_DOC, '+ // 3
-            'CDG_CO_CR, '+     // 4
-            'CDG_TIPO_FACTURA, '+ // 5
-            'CDG_VVP_TOT, '+ // 6            
-            '(select count(*) from DET_DOC_SER where dds_num_doc=cdg_num_doc) as CDG_SERVICIOS, '+ // 7
-            '(select count(*) from DET_DOC_REP where ddr_num_doc=cdg_num_doc) as CDG_REPUESTOS, '+ // 8
+            'CDG_NUM_DOC, '+ // 0   num
+            'CDG_FEC_GEN, '+ // 1   Fecha 
+            'CDG_NOM_CLI, '+ // 2   Razon
+            'CDG_CLA_DOC, '+ // 3   clase
+            'CDG_CO_CR, '+   // 4   tipo
+            'CDG_TIPO_FACTURA, '+ // 5  unica 
+            'CDG_TIP_IMP, '+  // 6   Impresion
+            'CDG_VVP_TOT '+ // 7    total
             'from cab_doc_gen where cdg_cod_gen=\'02\' and cdg_cod_emp=\'01\' order by CDG_FEC_GEN Desc',
             {} ,
             { outFormat: oracledb.ARRAY } ,
@@ -33,12 +32,19 @@ router.get('/documentos', function(req, res){
     });
 });
 
-router.get('/documentos_fb_cabezera/:num_doc/:cla_doc/', function(req, res){
+router.get('/fb_cab/:num_doc/:cla_doc/', function(req, res){
     oracledb.getConnection(dconexion, function (err, conexion) {
         conexion.execute(
             'select '+
-            '1 as tipoOperacion, CDG_FEC_GEN as fec_gen, CDG_DOC_CLI as doc_cli, '+
-            'CDG_NOM_CLI as nom_cli, CDG_DES_TOT as des_total, CDG_IMP_NETO as imp_neto, CDG_TIPO_FACTURA AS tipo_factura '+
+            '1 as tipoOperacion, '+ // 0. 
+            'CDG_FEC_GEN as fec_gen, '+ // 1
+            'CDG_DOC_CLI as doc_cli, '+ // 2
+            'CDG_NOM_CLI as nom_cli, '+ // 3
+            'CDG_DES_TOT as des_total, '+ //  4
+            'CDG_IMP_NETO as imp_neto, '+  // 5
+            'CDG_TIPO_FACTURA AS tipo_factura, '+ // 6
+            '(select count(*) from DET_DOC_SER where dds_cod_gen=cdg_cod_gen and dds_cod_emp=cdg_cod_emp and dds_cla_doc=cdg_cla_doc and  dds_num_doc=cdg_num_doc) as ser, '+ // 7 Servicos
+            '(select count(*) from DET_DOC_REP where ddr_cod_gen=cdg_cod_gen and ddr_cod_emp=cdg_cod_emp and ddr_cla_doc=cdg_cla_doc and  ddr_num_doc=cdg_num_doc) as rep '+ // 8 Repuestos
             'from CAB_DOC_GEN WHERE CDG_NUM_DOC=:num_doc and CDG_CLA_DOC=:cla_doc',
             { 
                 num_doc: { val: req.params.num_doc },
