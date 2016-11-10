@@ -1,43 +1,41 @@
 <div class="container">	
-	<table class="table table-striped">
+	<table class="table table-hover table-sm">
 		<tr>
 			<th class="text-xs-center">#</th>
-			<th class="text-xs-right">Num</th>
-			<th>Fecha</th>
-			<th>Razon</th>
-			<th>Clase</th>
-			<th>Tipo</th>
-            <th>Unica</th>
-            <th>Imp</th>
-			<th class="text-xs-right">Total</th>
-			<th class="text-xs-right">Acciones</th>
+			<th class="text-xs-left">Num</th> <!-- 0 -->
+			<th>Fecha</th> <!-- 1 -->
+			<th>Razon</th> <!-- 2 -->
+			<th>Clase</th> <!-- 3 -->
+			<th>Tipo</th> <!-- 4 -->
+            <th>Franq</th> <!-- 5 -->
+            <th>Imp</th> <!-- 6 -->
+            <th>Ser</th> <!-- 7 -->
+            <th>Rep</th> <!-- 8 -->            
+			<th class="text-xs-right">Total</th> <!-- 9 -->
+            <th>Mon</th> <!-- 10 -->
+			<th>Acciones</th>
 		</tr>
 		<tr ng-repeat="documento in documentos">			
 			<td class="text-xs-center">{{$index + 1}}</td>
-			<td class="text-xs-right">{{documento[0]}}</td>  <!-- 0. Num  -->
-			<td>{{documento[1] | date:'dd-MM-yyyy'}}</td>    <!-- 1. Fecha  -->			
+			<td class="text-xs-left">{{documento[0]}}</td>  <!-- 0. Num  -->
+			<td>{{documento[1] | date:'dd-MM-yyyy'}}</td>    <!-- 1. Fecha  -->	
 			<td>{{documento[2].substr(0, 25)}}</td>  <!-- 2. Razon  -->
 			<td>{{documento[3]}}</td>   <!-- 3. Clase (FS,FR,BR,BS,AR,AS) -->
 			<td>{{documento[4]}}</td>   <!-- 4. Co_cr (CO,CR,AN) -->
             <td>{{documento[5]}}</td>   <!-- 5. Unica (1,0) -->
             <td>{{documento[6]}}</td>   <!-- 6. Imp (D,R) -->
-			<td class="text-xs-right">{{ documento[7] | number:2 }}</td>     <!-- 7. Total -->
-			<td class="text-xs-right">
-				<div class="btn-group" role="group" aria-label="Basic example">
-                    <button 
-                    type="button" 
-                    class="btn btn-secondary btn-sm active" 
-                    data-toggle="modal" 
-                    data-target="#myModal" 
-                    ng-click="ver(documento[0],documento[3],documento[4],documento[6])">
-                    	<i class="fa fa-eye"></i> Ver
-                    </button>
-                    <!-- 
-                    <button type="button" class="btn btn-secondary btn-sm active">
-                    	<i class="fa fa-trash"></i> Eliminar
-                    </button>
-                    -->
-                </div>
+            <td>{{documento[7]}}</td>   <!-- 6. Imp (D,R) -->
+            <td>{{documento[8]}}</td>   <!-- 6. Imp (D,R) -->            
+			<td class="text-xs-right">{{ documento[9] | number:2 }}</td>     <!-- 7. Total -->
+            <td>{{documento[10]}}</td>   <!-- 6. Imp (D,R) -->
+			<td>                
+                <i style="cursor: pointer;" 
+                class="fa fa-lg fa-file-text-o"
+                data-target="#myModal" 
+                data-toggle="modal" 
+                ng-click="ver(documento[0],documento[3],documento[4],documento[6])">                    
+                </i>
+                				
 			</td>
 		</tr>
 	</table>

@@ -10,6 +10,28 @@ var dconexion = {
     connectString : dbConfig.connectString     
 }
 
+
+router.get('/docs', function(req, res){
+    oracledb.getConnection(dconexion, function (err, conexion) {
+        conexion.execute(
+            "BEGIN PKG_ELECTRONICA.DOCS(:docs); END;",
+            { 
+                docs: { type: oracledb.CURSOR, dir: oracledb.BIND_OUT } 
+            },
+            function (err, result) {
+                result.outBinds.docs.getRows(
+                    1000,
+                    function(err, rows){
+                        res.contentType('application/json').send(JSON.stringify(rows));
+                    }
+                )
+            }
+        );
+    });
+});
+
+
+/*
 router.get('/documentos', function(req, res){
     oracledb.getConnection(dconexion, function (err, conexion) {
         conexion.execute(

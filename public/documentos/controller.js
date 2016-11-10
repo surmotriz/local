@@ -1,5 +1,5 @@
 app.controller('documentosIndexCtlr', function($scope, $http){
-	$http.get('/apis/documentos').success(function(data){
+	$http.get('/apis/docs').success(function(data){
 		$scope.documentos = data;
 	});
 	$scope.ver = function(num_doc,cla_doc,co_cr,tip_imp){	
