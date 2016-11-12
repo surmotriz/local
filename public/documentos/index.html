@@ -15,27 +15,26 @@
             <th>Mon</th> <!-- 10 -->
 			<th>Acciones</th>
 		</tr>
-		<tr ng-repeat="documento in documentos">			
+		<tr ng-repeat="doc in docs">			
 			<td class="text-xs-center">{{$index + 1}}</td>
-			<td class="text-xs-left">{{documento[0]}}</td>  <!-- 0. Num  -->
-			<td>{{documento[1] | date:'dd-MM-yyyy'}}</td>    <!-- 1. Fecha  -->	
-			<td>{{documento[2].substr(0, 25)}}</td>  <!-- 2. Razon  -->
-			<td>{{documento[3]}}</td>   <!-- 3. Clase (FS,FR,BR,BS,AR,AS) -->
-			<td>{{documento[4]}}</td>   <!-- 4. Co_cr (CO,CR,AN) -->
-            <td>{{documento[5]}}</td>   <!-- 5. Unica (1,0) -->
-            <td>{{documento[6]}}</td>   <!-- 6. Imp (D,R) -->
-            <td>{{documento[7]}}</td>   <!-- 6. Imp (D,R) -->
-            <td>{{documento[8]}}</td>   <!-- 6. Imp (D,R) -->            
-			<td class="text-xs-right">{{ documento[9] | number:2 }}</td>     <!-- 7. Total -->
-            <td>{{documento[10]}}</td>   <!-- 6. Imp (D,R) -->
+			<td class="text-xs-left">{{doc[0]}}</td>  <!-- 0. Num  -->
+			<td>{{doc[1] | date:'dd-MM-yyyy'}}</td>    <!-- 1. Fecha  -->	
+			<td>{{doc[2].substr(0, 25)}}</td>  <!-- 2. Razon  -->
+			<td>{{doc[3]}}</td>   <!-- 3. Clase (FS,FR,BR,BS,AR,AS) -->
+			<td>{{doc[4]}}</td>   <!-- 4. Co_cr (CO,CR,AN) -->
+            <td>{{doc[5]}}</td>   <!-- 5. Unica (1,0) -->
+            <td>{{doc[6]}}</td>   <!-- 6. Imp (D,R) -->
+            <td>{{doc[7]}}</td>   <!-- 6. Imp (D,R) -->
+            <td>{{doc[8]}}</td>   <!-- 6. Imp (D,R) -->            
+			<td class="text-xs-right">{{ doc[9] | number:2 }}</td>     <!-- 7. Total -->
+            <td>{{doc[10]}}</td>   <!-- 6. Imp (D,R) -->
 			<td>                
                 <i style="cursor: pointer;" 
                 class="fa fa-lg fa-file-text-o"
                 data-target="#myModal" 
                 data-toggle="modal" 
-                ng-click="ver(documento[0],documento[3],documento[4],documento[6])">                    
-                </i>
-                				
+                ng-click="ver(doc[0],doc[3],doc[4],doc[5],doc[6],doc[7],doc[8],doc[10])">
+                </i>                				
 			</td>
 		</tr>
 	</table>

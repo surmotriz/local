@@ -29,27 +29,28 @@ router.get('/docs', function(req, res){
     });
 });
 
-router.get('/fbc/:num_doc/:cla_doc/:co_cr/:exi_fra/:moneda/', function(req, res){
-    oracledb.getConnection(conexion, function(err, conexion){
+router.get('/fbc/:num_doc/:cla_doc/:co_cr/:exi_fra/:tip_imp/:moneda/', function(req, res){
+    oracledb.getConnection(conexion, function (err, conexion) {
         conexion.execute(
-            "BEGIN PKG_ELECTRONICA.FBC(:num_doc,:cla_doc,:co_cr,:exi_fra,:moneda,:fbc); END;",
-            {
-                num_doc: { val: req.params.num_doc, dir:oracledb.BIND_IN },                
-                cla_doc: { val: req.params.cla_doc, type:oracledb.STRING },
-                co_cr:   { val: req.params.co_cr,   type:oracledb.STRING },
-                exi_fra: { val: req.params.exi_fra, type:oracledb.STRING },
-                moneda:  { val: req.params.moneda,  type:oracledb.STRING }, 
-                fbc:     { type: oracledb.CURSOR, dir: oracledb.BIND_OUT }
+            "BEGIN PKG_ELECTRONICA.fbc(:num_doc,:cla_doc,:co_cr,:exi_fra,:tip_imp,:moneda,:fbc); END;",
+            { 
+                num_doc: { val: req.params.num_doc, dir:oracledb.BIND_IN },
+                cla_doc: { val: req.params.cla_doc, type:oracledb.STRING }, 
+                co_cr: { val: req.params.co_cr, type:oracledb.STRING }, 
+                exi_fra: { val: req.params.exi_fra, type:oracledb.STRING }, 
+                tip_imp: { val: req.params.tip_imp, type:oracledb.STRING }, 
+                moneda: { val: req.params.moneda, type:oracledb.STRING }, 
+                fbc: { type: oracledb.CURSOR, dir: oracledb.BIND_OUT } 
             },
-            function(err, result){
-                result.outBinds.resultado.getRows(
-                    1,
+            function (err, result) {
+                result.outBinds.fbc.getRows(
+                    2,
                     function(err, rows){
                         res.contentType('application/json').send(JSON.stringify(rows));
                     }
                 )
             }
-        );      
+        );
     });
 });
 
