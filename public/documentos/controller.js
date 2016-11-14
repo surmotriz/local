@@ -3,6 +3,14 @@ app.controller('documentosIndexCtlr', function($scope, $http){
 		$scope.docs = data;
 	});
 	$scope.ver = function(num_doc,cla_doc,co_cr_an,exi_fra,tip_imp,ser,rep,moneda){	
+		$scope.num_doc = num_doc;
+		$scope.cla_doc = cla_doc;
+		$scope.co_cr_an = co_cr_an;
+		$scope.exi_fra = exi_fra;
+		$scope.tip_imp = tip_imp;
+		$scope.ser 	= ser;
+		$scope.rep = rep;
+		$scope.moneda = moneda;
 
 		// Factura o Boleta
 		if (cla_doc=='FS' || cla_doc=='FR' || cla_doc=='BS' || cla_doc=='BR' || cla_doc=='FC'){ // Factura y Boleta			
@@ -26,14 +34,16 @@ app.controller('documentosIndexCtlr', function($scope, $http){
 				console.log('Delle Anticipo');
 			}	
 			*/			
-			$http.get( '/apis/fbc/'+num_doc+'/'+cla_doc+'/'+co_cr_an+'/'+exi_fra+'/'+tip_imp+'/'+moneda).success(function(data){
+			$http.get( '/apis/fbc/'+num_doc).success(function(data){
 				$scope.fb_cab = data[0];				
 			});
 			
 			
 		// Nota de Credito		
 		}else if(cla_doc=='AR' || cla_doc=='AS') { 
-			console.log('Nota de Credito');
+			$http.get( '/apis/ncc/'+num_doc).success(function(data){
+				$scope.fb_cab = data[0];				
+			});
 		}
 		
 			

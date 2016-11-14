@@ -46,9 +46,16 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Factura</h4>
+                <h4 class="modal-title" ng-if=(cla_doc=='FS')>Factura Electronica</h4>
+                <h4 class="modal-title" ng-if=(cla_doc=='FR')>Factura Electronica</h4>
+                <h4 class="modal-title" ng-if=(cla_doc=='BS')>Boleta Electronica</h4>
+                <h4 class="modal-title" ng-if=(cla_doc=='BR')>Boleta Electronica Repuestos</h4>
+                <h4 class="modal-title" ng-if=(cla_doc=='FC')>Factura Electronica Contabilidad</h4>
+                <h4 class="modal-title" ng-if=(cla_doc=='AR')>Nota Credito Electronica Abono de Repuestos</h4>
+                <h4 class="modal-title" ng-if=(cla_doc=='AS')>Nota Credito  Electronica Abono de Servicios</h4>
             </div>
             <div class="modal-body">
+                <h1 class="text-xs-center">Factura: 0001-00004789</h1>
                 {{fb_cab}}
             </div>
             <div class="modal-footer">
