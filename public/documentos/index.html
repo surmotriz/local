@@ -56,16 +56,28 @@
                 <!-- Factura o Boleta -->
                 <div ng-if="cla_doc=='FS' || cla_doc=='FR' || cla_doc=='BS' || cla_doc=='BR' || cla_doc=='FC'">
                     <div class="row">
-                        <div class="col-xs-6 text-xs-left" style="padding-left: 20px;">
-                            <strong><i class="fa fa-cog"></i> Facturado A:</strong><br>
-                            <span><strong><i class="fa fa-calendar-o"></i> Fecha Emision : </strong>{{fb_cab[1] | date:'dd-MM-yyyy'}}</span><br>
-                            <span><strong><i class="fa fa-user-o"></i> Señor(es) : </strong> {{fb_cab[5]}} </span><br>
-                            <span><strong><i class="fa fa-eye"></i> R.U.C : </strong> {{fb_cab[[4]]}} </span><br>
-                            <span><strong><i class="fa fa-money"></i> Tipo Moneda : </strong>{{fb_cab[[6]]}}</span>
+                        <div class="col-xs-8 text-xs-left">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <strong>Facturado A:</strong><br>
+                                    <strong><i class="fa fa-calendar-o"></i> Fecha Emision : </strong><br>
+                                    <strong><i class="fa fa-user-o"></i> Señor(es) : </strong><br>
+                                    <strong><i class="fa fa-eye"></i> R.U.C : </strong><br>
+                                    <strong><i class="fa fa-money"></i> Tipo Moneda : </strong>
+                                </div>
+                                <div class="col-xs-8">
+                                    <br>
+                                    {{fb_cab[1] | date:'dd-MM-yyyy'}}<br>
+                                    {{fb_cab[5]}} <br>
+                                    {{fb_cab[[4]]}} <br>
+                                    {{fb_cab[[6]]}}
+                                </div>                                
+                            </div>                                    
                         </div>
-                        <div class="col-xs-6 text-xs-right">
+                        <div class="col-xs-4 text-xs-right">
                             <strong>Facturado Por:</strong><br>
-                            <span>Surmotriz SRL</span><br>
+                            <span>R.U.C. 20532710066</span><br>
+                            <span>SURMOTRIZ S.R.L</span><br>
                             <span>Avenida Leguia 1870</span>
                         </div>
                     </div>
@@ -82,7 +94,7 @@
                         </thead>
                     </table>
                     <div class="row">
-                        <div class="offset-xs-7 col-xs-3 text-xs-right">
+                        <div class="offset-xs-6 col-xs-3 text-xs-right">
                             <strong>
                                 Monto Descuentos:<br>
                                 Op. Gravadas: <br>
@@ -92,14 +104,22 @@
                                 Importe Total:
                             </strong>
                         </div>
+                        <div class="col-xs-1">
+                            {{fb_cab[[6]]}}<br>
+                            {{fb_cab[[6]]}}<br>
+                            {{fb_cab[[6]]}}<br>
+                            {{fb_cab[[6]]}}<br><br>
+                            {{fb_cab[[6]]}}<br>
+                            {{fb_cab[[6]]}}
+                        </div>
                         <div class="col-xs-2 text-xs-right">
                             <strong>
-                                {{fb_cab[9]}}<br>
-                                {{fb_cab[10]}}<br>
+                                {{fb_cab[9] | number:2}}<br>
+                                {{fb_cab[10] | number:2}}<br>
                                 0.00<br>
                                 0.00<br><br>
-                                {{fb_cab[13]}}<br>
-                                {{fb_cab[16]}}
+                                {{fb_cab[13] | number:2}}<br>
+                                {{fb_cab[16] | number:2}}
                             </strong>
                         </div>
                     </div> 
@@ -107,16 +127,30 @@
                 <!-- Nota Credito -->
                 <div ng-if="cla_doc=='AS' || cla_doc=='AR'">
                     <div class="row">
-                        <div class="col-xs-6 text-xs-left" style="padding-left: 20px;">
-                            <strong><i class="fa fa-cog"></i> Facturado A:</strong><br>
-                            <span><strong><i class="fa fa-calendar-o"></i> Fecha Emision : </strong>{{fb_cab[0] | date:'dd-MM-yyyy'}}</span><br>
-                            <span><strong><i class="fa fa-user-o"></i> Motivo : </strong> {{fb_cab[2]}} </span><br>
-                            <span><strong><i class="fa fa-eye"></i> Documento : </strong> {{fb_cab[[4]]}} </span><br>
-                            <span><strong><i class="fa fa-money"></i> Tipo Moneda : </strong>{{fb_cab[[6]]}}</span>
+                        <div class="col-xs-8 text-xs-left">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <strong>Facturado A:</strong><br>
+                                    <strong><i class="fa fa-calendar-o"></i> Fecha Emision : </strong><br>
+                                    <strong><i class="fa fa-user-o"></i> Motivo : </strong><br>
+                                    <strong><i class="fa fa-eye"></i> Documento : </strong><br>
+                                    <strong><i class="fa fa-address-card-o"></i> Razon Social : </strong><br>
+                                    <strong><i class="fa fa-money"></i> Tipo Moneda : </strong>
+                                </div>
+                                <div class="col-xs-8">
+                                    <br>
+                                    {{fb_cab[0] | date:'dd-MM-yyyy'}}<br>
+                                    {{fb_cab[2]}} <br>
+                                    {{fb_cab[[6]]}} <br>
+                                    {{fb_cab[[7]]}} <br>
+                                    {{fb_cab[[8]]}}        
+                                </div>
+                            </div>                            
                         </div>
-                        <div class="col-xs-6 text-xs-right">
+                        <div class="col-xs-4 text-xs-right">
                             <strong>Facturado Por:</strong><br>
-                            <span>Surmotriz SRL</span><br>
+                            <span>R.U.C. 20532710066</span><br>
+                            <span>Surmotriz S.R.L</span><br>
                             <span>Avenida Leguia 1870</span>
                         </div>
                     </div>
@@ -133,7 +167,7 @@
                         </thead>
                     </table>
                     <div class="row">
-                        <div class="offset-xs-7 col-xs-3 text-xs-right">
+                        <div class="offset-xs-6 col-xs-3 text-xs-right">
                             <strong>
                                 Monto Descuentos:<br>
                                 Op. Gravadas: <br>
@@ -143,14 +177,22 @@
                                 Importe Total:
                             </strong>
                         </div>
+                        <div class="col-xs-1">
+                            {{fb_cab[[8]]}}<br>
+                            {{fb_cab[[8]]}}<br>
+                            {{fb_cab[[8]]}}<br>
+                            {{fb_cab[[8]]}}<br><br>
+                            {{fb_cab[[8]]}}<br>
+                            {{fb_cab[[8]]}}
+                        </div>
                         <div class="col-xs-2 text-xs-right">
                             <strong>
-                                {{fb_cab[9]}}<br>
-                                {{fb_cab[10]}}<br>
+                                {{fb_cab[9] | number:2}}<br>
+                                {{fb_cab[10] | number:2}}<br>
                                 0.00<br>
                                 0.00<br><br>
-                                {{fb_cab[13]}}<br>
-                                {{fb_cab[16]}}
+                                {{fb_cab[13] | number:2}}<br>
+                                {{fb_cab[16] | number:2}}
                             </strong>
                         </div>
                     </div> 
