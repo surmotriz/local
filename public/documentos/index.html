@@ -30,7 +30,7 @@
             <td>{{doc[10]}}</td>   <!-- 6. Imp (D,R) -->
 			<td>                
                 <i style="cursor: pointer;" 
-                class="fa fa-lg fa-file-text-o"
+                class="fa fa-file-text-o"
                 data-target="#myModal" 
                 data-toggle="modal" 
                 ng-click="ver(doc[0],doc[3],doc[4],doc[5],doc[6],doc[7],doc[8],doc[10])">
@@ -40,23 +40,121 @@
 	</table>
 	<!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-lg" role="document" >
             <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" ng-if=(cla_doc=='FS')>Factura Electronica</h4>
-                <h4 class="modal-title" ng-if=(cla_doc=='FR')>Factura Electronica</h4>
-                <h4 class="modal-title" ng-if=(cla_doc=='BS')>Boleta Electronica</h4>
-                <h4 class="modal-title" ng-if=(cla_doc=='BR')>Boleta Electronica Repuestos</h4>
-                <h4 class="modal-title" ng-if=(cla_doc=='FC')>Factura Electronica Contabilidad</h4>
-                <h4 class="modal-title" ng-if=(cla_doc=='AR')>Nota Credito Electronica Abono de Repuestos</h4>
-                <h4 class="modal-title" ng-if=(cla_doc=='AS')>Nota Credito  Electronica Abono de Servicios</h4>
+                <h4 class="modal-title">Electronica</h4>
             </div>
             <div class="modal-body">
-                <h1 class="text-xs-center">Factura: 0001-00004789</h1>
-                {{fb_cab}}
+                <h2 class="text-xs-center" ng-if="(cla_doc=='FS' || cla_doc=='FR' || cla_doc=='FC')">
+                <i class="fa fa-file-text-o"></i> Factura: {{fb_cab[17].substr(15,13)}}</h2>
+                <h2 class="text-xs-center" ng-if="(cla_doc=='BS' || cla_doc=='BR')"><i class="fa fa-file-text-o"></i> Boleta: 0001-00004789</h2>
+                <h2 class="text-xs-center" ng-if="(cla_doc=='AR' || cla_doc=='AS')"><i class="fa fa-file-text-o"></i> Nota Credito: {{fb_cab[17].substr(15,13)}}</h2>
+                <!-- Factura o Boleta -->
+                <div ng-if="cla_doc=='FS' || cla_doc=='FR' || cla_doc=='BS' || cla_doc=='BR' || cla_doc=='FC'">
+                    <div class="row">
+                        <div class="col-xs-6 text-xs-left" style="padding-left: 20px;">
+                            <strong><i class="fa fa-cog"></i> Facturado A:</strong><br>
+                            <span><strong><i class="fa fa-calendar-o"></i> Fecha Emision : </strong>{{fb_cab[1] | date:'dd-MM-yyyy'}}</span><br>
+                            <span><strong><i class="fa fa-user-o"></i> Señor(es) : </strong> {{fb_cab[5]}} </span><br>
+                            <span><strong><i class="fa fa-eye"></i> R.U.C : </strong> {{fb_cab[[4]]}} </span><br>
+                            <span><strong><i class="fa fa-money"></i> Tipo Moneda : </strong>{{fb_cab[[6]]}}</span>
+                        </div>
+                        <div class="col-xs-6 text-xs-right">
+                            <strong>Facturado Por:</strong><br>
+                            <span>Surmotriz SRL</span><br>
+                            <span>Avenida Leguia 1870</span>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead class="thead-default">
+                            <tr>
+                                <th>Cantidad</th>
+                                <th>Und Medida</th>
+                                <th>Codigo</th>
+                                <th>Descripcion</th>
+                                <th>Valor Unitario</th>
+                                <th>Descuento</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="row">
+                        <div class="offset-xs-7 col-xs-3 text-xs-right">
+                            <strong>
+                                Monto Descuentos:<br>
+                                Op. Gravadas: <br>
+                                Op. Inafecta: <br>
+                                Op. Exoneradas: <br><br>
+                                IGV:<br>
+                                Importe Total:
+                            </strong>
+                        </div>
+                        <div class="col-xs-2 text-xs-right">
+                            <strong>
+                                {{fb_cab[9]}}<br>
+                                {{fb_cab[10]}}<br>
+                                0.00<br>
+                                0.00<br><br>
+                                {{fb_cab[13]}}<br>
+                                {{fb_cab[16]}}
+                            </strong>
+                        </div>
+                    </div> 
+                </div>
+                <!-- Nota Credito -->
+                <div ng-if="cla_doc=='AS' || cla_doc=='AR'">
+                    <div class="row">
+                        <div class="col-xs-6 text-xs-left" style="padding-left: 20px;">
+                            <strong><i class="fa fa-cog"></i> Facturado A:</strong><br>
+                            <span><strong><i class="fa fa-calendar-o"></i> Fecha Emision : </strong>{{fb_cab[0] | date:'dd-MM-yyyy'}}</span><br>
+                            <span><strong><i class="fa fa-user-o"></i> Motivo : </strong> {{fb_cab[2]}} </span><br>
+                            <span><strong><i class="fa fa-eye"></i> Documento : </strong> {{fb_cab[[4]]}} </span><br>
+                            <span><strong><i class="fa fa-money"></i> Tipo Moneda : </strong>{{fb_cab[[6]]}}</span>
+                        </div>
+                        <div class="col-xs-6 text-xs-right">
+                            <strong>Facturado Por:</strong><br>
+                            <span>Surmotriz SRL</span><br>
+                            <span>Avenida Leguia 1870</span>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead class="thead-default">
+                            <tr>
+                                <th>Cantidad</th>
+                                <th>Und Medida</th>
+                                <th>Codigo</th>
+                                <th>Descripcion</th>
+                                <th>Valor Unitario</th>
+                                <th>Descuento</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="row">
+                        <div class="offset-xs-7 col-xs-3 text-xs-right">
+                            <strong>
+                                Monto Descuentos:<br>
+                                Op. Gravadas: <br>
+                                Op. Inafecta: <br>
+                                Op. Exoneradas: <br><br>
+                                IGV:<br>
+                                Importe Total:
+                            </strong>
+                        </div>
+                        <div class="col-xs-2 text-xs-right">
+                            <strong>
+                                {{fb_cab[9]}}<br>
+                                {{fb_cab[10]}}<br>
+                                0.00<br>
+                                0.00<br><br>
+                                {{fb_cab[13]}}<br>
+                                {{fb_cab[16]}}
+                            </strong>
+                        </div>
+                    </div> 
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
