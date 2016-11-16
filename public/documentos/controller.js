@@ -15,27 +15,24 @@ app.controller('documentosIndexCtlr', function($scope, $http){
 		// Factura o Boleta
 		if (cla_doc=='FS' || cla_doc=='FR' || cla_doc=='BS' || cla_doc=='BR' || cla_doc=='FC'){ // Factura y Boleta			
 			
-			/*			
-			// si es al contado o credito entra con ese mismo detalle
-			if(co_cr=='CO' || co_cr=='CR'){
-
-				// impresion con detalle
-				if (tip_imp=='D'){
-					if (data[0][7]!='0'){ // Servicios
-						console.log('Detalle Servicios Factura o Boleta');
-					}
-					if (data[0][8]!='0'){ // Repuestos
-						console.log('Detalle Repuestos Factura o Boleta');
-					}
-				}else if (tip_imp=='R'){ // impresion con resumen
-					console.log('Detalle Resumen');
-				}
-			}else if (co_cr=='AN'){ // si es anticipo tiene un detalle
-				console.log('Delle Anticipo');
-			}	
-			*/			
 			$http.get( '/apis/fbc/'+num_doc).success(function(data){
-				$scope.fb_cab = data[0];				
+				$scope.fb_cab = data[0];			
+				// si es al contado o credito entra con ese mismo detalle
+				if(co_cr_an=='CO' || co_cr_an=='CR'){
+					// impresion con detalle
+					if (tip_imp=='D'){
+						$http.get( '/apis/dds/'+num_doc+'/'+cla_doc).success(function(data){
+							$scope.dds = data;
+						});
+					}else if (tip_imp=='R'){ // impresion con resumen
+						console.log('Detalle Resumen');
+					}
+				}else if (co_cr_an=='AN'){ // si es anticipo tiene un detalle
+					console.log('Delle Anticipo');
+				}	
+						
+			
+								
 			});
 			
 			
