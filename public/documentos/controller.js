@@ -2,14 +2,12 @@ app.controller('documentosIndexCtlr', function($scope, $http){
 	$http.get('/apis/docs').success(function(data){
 		$scope.docs = data;
 	});
-	$scope.ver = function(num_doc,cla_doc,co_cr_an,exi_fra,tip_imp,ser,rep,moneda){	
+	$scope.ver = function(num_doc,cla_doc,co_cr_an,exi_fra,tip_imp,moneda){	
 		$scope.num_doc = num_doc;
 		$scope.cla_doc = cla_doc;
 		$scope.co_cr_an = co_cr_an;
 		$scope.exi_fra = exi_fra;
 		$scope.tip_imp = tip_imp;
-		$scope.ser 	= ser;
-		$scope.rep = rep;
 		$scope.moneda = moneda;
 
 		// Factura o Boleta
@@ -21,18 +19,15 @@ app.controller('documentosIndexCtlr', function($scope, $http){
 				if(co_cr_an=='CO' || co_cr_an=='CR'){
 					// impresion con detalle
 					if (tip_imp=='D'){
-						$http.get( '/apis/dds/'+num_doc+'/'+cla_doc).success(function(data){
+						$http.get( '/apis/dds/'+num_doc+'/'+cla_doc+'/'+moneda).success(function(data){
 							$scope.dds = data;
 						});
 					}else if (tip_imp=='R'){ // impresion con resumen
-						console.log('Detalle Resumen');
+						
 					}
 				}else if (co_cr_an=='AN'){ // si es anticipo tiene un detalle
-					console.log('Delle Anticipo');
-				}	
-						
-			
-								
+					
+				}								
 			});
 			
 			

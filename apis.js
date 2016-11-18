@@ -71,13 +71,14 @@ router.get('/ncc/:num_doc/', function(req, res){
 });
 
 // detalle de los documentos dolares y soles
-router.get('/dds/:num_doc/:cla_doc/', function(req, res){
+router.get('/dds/:num_doc/:cla_doc/:moneda/', function(req, res){
     oracledb.getConnection(conexion, function (err, conexion) {
         conexion.execute(
-            "BEGIN PKG_ELECTRONICA.dds(:num_doc,:cla_doc,:dds); END;",
+            "BEGIN PKG_ELECTRONICA.dds(:num_doc,:cla_doc,:moneda,:dds); END;",
             { 
                 num_doc: { val: req.params.num_doc, dir:oracledb.BIND_IN },
-                cla_doc: { val: req.params.cla_doc, type:oracledb.STRING },
+                cla_doc: { val: req.params.cla_doc, type:oracledb.STRING },                
+                moneda: { val: req.params.moneda, type:oracledb.STRING },                
                 dds: { type: oracledb.CURSOR, dir: oracledb.BIND_OUT } 
             },
             function (err, result) {
