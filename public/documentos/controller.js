@@ -1,43 +1,151 @@
-app.controller('documentosIndexCtlr', function($scope, $http){
+app.controller('documentosIndexCtlr', function($scope, $http, FileSaver, Blob){
 	$http.get('/apis/docs').success(function(data){
 		$scope.docs = data;
 	});
-	$scope.ver = function(num_doc,cla_doc,co_cr_an,exi_fra,tip_imp,moneda){	
-		$scope.num_doc = num_doc;
-		$scope.cla_doc = cla_doc;
-		$scope.co_cr_an = co_cr_an;
-		$scope.exi_fra = exi_fra;
-		$scope.tip_imp = tip_imp;
-		$scope.moneda = moneda;
+
+	$scope.ver = function(doc,cab,det){	
+		$scope.num_doc = doc[0];
+		$scope.cla_doc = doc[3];
+		$scope.co_cr_an = doc[4];
+		$scope.exi_fra = doc[5];
+		$scope.tip_imp = doc[6];
+		$scope.moneda = doc[8];		
+		$scope.cab = cab;
+		$scope.det = det;
+		$scope.doc = doc;		
+		
 
 		// Factura o Boleta
-		if (cla_doc=='FS' || cla_doc=='FR' || cla_doc=='BS' || cla_doc=='BR' || cla_doc=='FC'){ // Factura y Boleta			
+		if ($scope.cla_doc=='FS' || $scope.cla_doc=='FR' || $scope.cla_doc=='BS' || $scope.cla_doc=='BR' || $scope.cla_doc=='FC'){ // Factura y Boleta			
+
+			// cabezera
 			
-			$http.get( '/apis/fbc/'+num_doc).success(function(data){
-				$scope.fb_cab = data[0];			
-				// si es al contado o credito entra con ese mismo detalle
-				if(co_cr_an=='CO' || co_cr_an=='CR'){
-					// impresion con detalle
-					if (tip_imp=='D'){
-						$http.get( '/apis/dds/'+num_doc+'/'+cla_doc+'/'+moneda).success(function(data){
-							$scope.dds = data;
+			$http.get( '/apis/fbc/'+$scope.num_doc).success(function(data){
+				$scope.fb_cab = data[0];
+							
+				// txt cabezera								
+				if($scope.cab=='S'){
+					var i=0;
+					var cabe = '';
+					data[0].forEach(function(entry) {
+						if(i<=16){
+							cabe += entry+'|';
+							console.log(entry);
+						}
+	    				i++;
+
+					});	
+					var cabezera = new Blob([cabe], { type: 'text/plain;charset=utf-8' });
+					FileSaver.saveAs(cabezera, data[0][17]);	
+				}
+
+				// detalle
+				if($scope.co_cr_an=='CO' || $scope.co_cr_an=='CR'){				
+					if ($scope.tip_imp=='D'){
+						$http.get( '/apis/dds/'+$scope.num_doc+'/'+$scope.cla_doc+'/'+$scope.moneda).success(function(data1){
+							$scope.dds = data1;
+
+							// genera txt det
+							if($scope.det=='S'){
+								var deta = '';
+								var i=0;
+								data1.forEach(function(){
+									data1[i].forEach(function(entry){
+										deta += entry+'|';
+										console.log(entry);
+									});
+									deta += '\r\n';
+									i++;
+								});
+									
+								var detalle = new Blob([deta], { type: 'text/plain;charset=utf-8' });
+								FileSaver.saveAs(detalle, data[0][20]);
+							}
 						});
-					}else if (tip_imp=='R'){ // impresion con resumen
+					}else if ($scope.tip_imp=='R'){ // impresion con resumen
+						if($scope.det=='S'){
+							var deta = 'NIU||||'+ data[0][19] +'|||||||||';
+							var detalle = new Blob([deta], { type: 'text/plain;charset=utf-8' });
+							FileSaver.saveAs(detalle, data[0][20]);
+						}
 						
 					}
-				}else if (co_cr_an=='AN'){ // si es anticipo tiene un detalle
-					
-				}								
+				}else if($scope.co_cr_an=='AN'){ // si es anticipo tiene un detalle
+					if($scope.det=='S'){
+						var deta = 'NIU||||'+ data[0][18] +'|||||||||';
+						var detalle = new Blob([deta], { type: 'text/plain;charset=utf-8' });
+						FileSaver.saveAs(detalle, data[0][20]);
+					}
+				}
 			});
+
+				
+				
 			
 			
 		// Nota de Credito		
-		}else if(cla_doc=='AR' || cla_doc=='AS') { 
-			$http.get( '/apis/ncc/'+num_doc).success(function(data){
-				$scope.fb_cab = data[0];				
+		}else if($scope.cla_doc=='AR' || $scope.cla_doc=='AS') { 
+
+			// cabezera
+			$http.get('/apis/ncc/'+$scope.num_doc).success(function(data){
+				$scope.fb_cab = data[0];
+
+				// genera cabezera txt
+				if($scope.cab=='S'){
+					var i=0;
+					var cabe = '';
+					data[0].forEach(function(entry) {
+						if(i<=16){
+							cabe += entry+'|';							
+						}
+	    				i++;
+
+					});	
+					var cabezera = new Blob([cabe], { type: 'text/plain;charset=utf-8' });
+					FileSaver.saveAs(cabezera, data[0][17]);	
+				}
+
+				// detalle
+				if($scope.co_cr_an=='CO' || $scope.co_cr_an=='CR'){
+					if ($scope.tip_imp=='D'){
+						$http.get( '/apis/dds/'+$scope.num_doc+'/'+$scope.cla_doc+'/'+$scope.moneda).success(function(data1){
+							$scope.dds = data1;
+							// genera txt det
+							if($scope.det=='S'){
+								var deta = '';
+								var i=0;
+								data1.forEach(function(){
+									data1[i].forEach(function(entry){
+										deta += entry+'|';										
+									});
+									deta += '\r\n';
+									i++;
+								});
+									
+								var detalle = new Blob([deta], { type: 'text/plain;charset=utf-8' });
+								FileSaver.saveAs(detalle, data[0][20]);
+							}
+						});
+					}else if ($scope.tip_imp=='R'){ // impresion con resumen
+						if($scope.det=='S'){
+							var deta = 'NIU||||'+ data[0][19] +'|||||||||';
+							var detalle = new Blob([deta], { type: 'text/plain;charset=utf-8' });
+							FileSaver.saveAs(detalle, data[0][20]);
+						}
+					}				
+				}else if ($scope.co_cr_an=='AN'){ 
+					if($scope.det=='S'){
+						var deta = 'NIU||||'+ data[0][18] +'|||||||||';
+						var detalle = new Blob([deta], { type: 'text/plain;charset=utf-8' });
+						FileSaver.saveAs(detalle, data[0][20]);
+					}
+				}
+
 			});
-		}
-		
+
+				
 			
+		}
+
 	};
 });

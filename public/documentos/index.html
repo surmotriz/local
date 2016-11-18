@@ -29,7 +29,7 @@
                 class="fa fa-file-text-o"
                 data-target="#myModal" 
                 data-toggle="modal" 
-                ng-click="ver(doc[0],doc[3],doc[4],doc[5],doc[6],doc[8])">
+                ng-click="ver(doc,'N','N')">
                 </i>                				
 			</td>
 		</tr>
@@ -102,7 +102,7 @@
                     <tr class="table-warning">                        
                         <th width="5%">#</th>
                         <th width="13%">Codigo</th>
-                        <th width="50%">Descripcion</th>
+                        <th width="55%">Descripcion</th>
                         <th class="text-xs-center">Cant</th>
                         <th class="text-xs-right">V. Unit</th>
                         <th class="text-xs-right">Desc</th>
@@ -171,14 +171,14 @@
                     </tr>
                 </table>
 
-                <!-- Nota de Credito -->
-                <table class="table table-sm table-hover" ng-if="cla_doc=='AS' || cla_doc=='AR'">
+                <!-- Nota Credito -->
+                <table class="table table-sm table-hover" ng-if="cla_doc=='AR' || cla_doc=='AS' ">
                     <tr>
                         <td colspan="2" class="text-xs-left">
-                            <i class="fa fa-calendar-o"></i> Fecha Emision 
+                            <i class="fa fa-calendar-o"></i> Fecha y Moneda 
                         </td>
                         <td class="text-xs-left">
-                            : {{fb_cab[1] | date:'dd-MM-yyyy'}}
+                            : {{fb_cab[0] | date:'dd-MM-yyyy'}} | {{fb_cab[8]}}
                         </td>
                         <td colspan="4" class="text-xs-right">
                             <strong>R.U.C. 20532710066</strong>
@@ -186,10 +186,10 @@
                     </tr>
                     <tr>
                         <td colspan="2" class="text-xs-left">
-                            <i class="fa fa-user-o"></i> Señor(es) 
+                            <i class="fa fa-user-o"></i> Modifica 
                         </td>
                         <td class="text-xs-left">
-                            : {{fb_cab[5]}}
+                            : {{fb_cab[4]}}
                         </td>
                         <td colspan="4" class="text-xs-right">
                             SURMOTRIZ S.R.L
@@ -197,10 +197,10 @@
                     </tr>
                     <tr>
                         <td colspan="2" class="text-xs-left">
-                            <i class="fa fa-eye"></i> R.U.C
+                            <i class="fa fa-eye"></i> Nombre
                         </td>
                         <td class="text-xs-left">
-                            : {{fb_cab[[4]]}}
+                            : {{fb_cab[[7]]}}
                         </td>
                         <td colspan="4" class="text-xs-right">
                             Avenida Leguia 1870
@@ -208,7 +208,7 @@
                     </tr>
                     <tr>
                         <td colspan="2" class="text-xs-left">
-                            <i class="fa fa-money"></i> Tipo Moneda
+                            <i class="fa fa-money"></i> Documento
                         </td>
                         <td class="text-xs-left">
                             : {{fb_cab[[6]]}}
@@ -259,39 +259,40 @@
 
                     <tr class="table-warning">
                         <td colspan="5" class="text-xs-right"><strong>Monto Descuentos</strong> </td>
-                        <td class="text-xs-right"><strong>{{fb_cab[[6]]}}</strong></td>
+                        <td class="text-xs-right"><strong>{{fb_cab[[8]]}}</strong></td>
                         <td class="text-xs-right"><strong>{{fb_cab[9] | number:2}}</strong></td>                            
                     </tr class="table-warning">
                     <tr class="table-warning">
                         <td colspan="5" class="text-xs-right"><strong>Op. Gravadas</strong> </td>
-                        <td class="text-xs-right"><strong>{{fb_cab[[6]]}}</strong></td>
+                        <td class="text-xs-right"><strong>{{fb_cab[[8]]}}</strong></td>
                         <td class="text-xs-right"><strong>{{fb_cab[10] | number:2}}</strong></td>                            
                     </tr>
                     <tr class="table-warning">
                         <td colspan="5" class="text-xs-right">Op. Inafecta </td>
-                        <td class="text-xs-right">{{fb_cab[[6]]}}</td>
+                        <td class="text-xs-right">{{fb_cab[[8]]}}</td>
                         <td class="text-xs-right">0.00</td>                            
                     </tr>
                     <tr class="table-warning">
                         <td colspan="5" class="text-xs-right">Op. Exoneradas </td>
-                        <td class="text-xs-right">{{fb_cab[[6]]}}</td>
+                        <td class="text-xs-right">{{fb_cab[[8]]}}</td>
                         <td class="text-xs-right">0.00</td>                            
                     </tr>
                     <tr class="table-warning">
                         <td colspan="5" class="text-xs-right"><strong>IGV</strong> </td>
-                        <td class="text-xs-right"><strong>{{fb_cab[[6]]}}</strong></td>
+                        <td class="text-xs-right"><strong>{{fb_cab[[8]]}}</strong></td>
                         <td class="text-xs-right"><strong>{{fb_cab[13] | number:2}}</strong></td>                            
                     </tr>
                     <tr class="table-warning">
                         <td colspan="5" class="text-xs-right"><strong>Importe Total</strong> </td>
-                        <td class="text-xs-right"><strong>{{fb_cab[[6]]}}</strong></td>
+                        <td class="text-xs-right"><strong>{{fb_cab[[8]]}}</strong></td>
                         <td class="text-xs-right"><strong>{{fb_cab[16] | number:2}}</strong></td>                            
                     </tr>
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" ng-click="descargar(documento)">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+                <button type="button" class="btn btn-primary" ng-click="ver(doc,'S','N')"><i class="fa fa-download"></i> Cabezera</button>
+                <button type="button" class="btn btn-success" ng-click="ver(doc,'N','S')"><i class="fa fa-download"></i> Detalle</button>
             </div>
             </div>
         </div>
