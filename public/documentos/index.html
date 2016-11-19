@@ -1,39 +1,35 @@
 <div class="container">	
-	<table class="table table-hover table-sm">
+	<table class="table table-hover">
 		<tr>
 			<th class="text-xs-center">#</th>
-			<th class="text-xs-left">Num</th> <!-- 0 -->
-			<th>Fecha</th> <!-- 1 -->
-			<th>Razon</th> <!-- 2 -->
-			<th>Clase</th> <!-- 3 -->
-			<th>Tipo</th> <!-- 4 -->
-            <th>Franq</th> <!-- 5 -->
-            <th>Imp</th> <!-- 6 -->
-            <th>Ser</th> <!-- 7 -->
-            <th>Rep</th> <!-- 8 -->            
-			<th class="text-xs-right">Total</th> <!-- 9 -->
-            <th>Mon</th> <!-- 10 -->
+			<th class="text-xs-left">Num</th>
+			<th>Fecha</th>
+			<th>Razon</th>
+			<th>Clase</th>
+			<th>Tipo</th>
+            <th>Franq</th>
+            <th>Imp</th>
+			<th class="text-xs-right">Total</th>
+            <th>Mon</th>
 			<th>Acciones</th>
 		</tr>
 		<tr ng-repeat="doc in docs">			
 			<td class="text-xs-center">{{$index + 1}}</td>
-			<td class="text-xs-left">{{doc[0]}}</td>  <!-- 0. Num  -->
-			<td>{{doc[1] | date:'dd-MM-yyyy'}}</td>    <!-- 1. Fecha  -->	
-			<td>{{doc[2].substr(0, 25)}}</td>  <!-- 2. Razon  -->
-			<td>{{doc[3]}}</td>   <!-- 3. Clase (FS,FR,BR,BS,AR,AS) -->
-			<td>{{doc[4]}}</td>   <!-- 4. Co_cr (CO,CR,AN) -->
-            <td>{{doc[5]}}</td>   <!-- 5. Unica (1,0) -->
-            <td>{{doc[6]}}</td>   <!-- 6. Imp (D,R) -->
-            <td>{{doc[7]}}</td>   <!-- 6. Imp (D,R) -->
-            <td>{{doc[8]}}</td>   <!-- 6. Imp (D,R) -->            
-			<td class="text-xs-right">{{ doc[9] | number:2 }}</td>     <!-- 7. Total -->
-            <td>{{doc[10]}}</td>   <!-- 6. Imp (D,R) -->
+			<td class="text-xs-left">{{doc[0]}}</td>  
+			<td>{{doc[1] | date:'dd-MM-yyyy'}}</td>   
+			<td>{{doc[2].substr(0, 25)}}</td>  
+			<td>{{doc[3]}}</td>   
+			<td>{{doc[4]}}</td>   
+            <td>{{doc[5]}}</td>   
+            <td>{{doc[6]}}</td>   
+			<td class="text-xs-right">{{ doc[7] | number:2 }}</td> 
+            <td>{{doc[8]}}</td>
 			<td>                
                 <i style="cursor: pointer;" 
                 class="fa fa-file-text-o"
                 data-target="#myModal" 
                 data-toggle="modal" 
-                ng-click="ver(doc[0],doc[3],doc[4],doc[5],doc[6],doc[7],doc[8],doc[10])">
+                ng-click="ver(doc,'N','N')">
                 </i>                				
 			</td>
 		</tr>
@@ -46,162 +42,259 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title">Electronica</h4>
+                <h4 class="modal-title">
+                    <i class="fa fa-check-circle"></i> Documento Electronico <small> - Serie {{fb_cab[17].substr(15,4)}}</small>
+                </h4>
             </div>
             <div class="modal-body">
                 <h2 class="text-xs-center" ng-if="(cla_doc=='FS' || cla_doc=='FR' || cla_doc=='FC')">
-                <i class="fa fa-file-text-o"></i> Factura: {{fb_cab[17].substr(15,13)}}</h2>
+                <i class="fa fa-file-text-o"></i> Factura: {{fb_cab[17].substr(20,8)}}</h2>
                 <h2 class="text-xs-center" ng-if="(cla_doc=='BS' || cla_doc=='BR')"><i class="fa fa-file-text-o"></i> Boleta: 0001-00004789</h2>
                 <h2 class="text-xs-center" ng-if="(cla_doc=='AR' || cla_doc=='AS')"><i class="fa fa-file-text-o"></i> Nota Credito: {{fb_cab[17].substr(15,13)}}</h2>
+
+
                 <!-- Factura o Boleta -->
-                <div ng-if="cla_doc=='FS' || cla_doc=='FR' || cla_doc=='BS' || cla_doc=='BR' || cla_doc=='FC'">
-                    <div class="row">
-                        <div class="col-xs-8 text-xs-left">
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <strong>Facturado A:</strong><br>
-                                    <strong><i class="fa fa-calendar-o"></i> Fecha Emision : </strong><br>
-                                    <strong><i class="fa fa-user-o"></i> Señor(es) : </strong><br>
-                                    <strong><i class="fa fa-eye"></i> R.U.C : </strong><br>
-                                    <strong><i class="fa fa-money"></i> Tipo Moneda : </strong>
-                                </div>
-                                <div class="col-xs-8">
-                                    <br>
-                                    {{fb_cab[1] | date:'dd-MM-yyyy'}}<br>
-                                    {{fb_cab[5]}} <br>
-                                    {{fb_cab[[4]]}} <br>
-                                    {{fb_cab[[6]]}}
-                                </div>                                
-                            </div>                                    
-                        </div>
-                        <div class="col-xs-4 text-xs-right">
-                            <strong>Facturado Por:</strong><br>
-                            <span>R.U.C. 20532710066</span><br>
-                            <span>SURMOTRIZ S.R.L</span><br>
-                            <span>Avenida Leguia 1870</span>
-                        </div>
-                    </div>
-                    {{dds}}
-                    <table class="table">
-                        <thead class="thead-default">
-                            <tr>
-                                <th>Cantidad</th>
-                                <th>Und Medida</th>
-                                <th>Codigo</th>
-                                <th>Descripcion</th>
-                                <th>Valor Unitario</th>
-                                <th>Descuento</th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="row">
-                        <div class="offset-xs-6 col-xs-3 text-xs-right">
-                            <strong>
-                                Monto Descuentos:<br>
-                                Op. Gravadas: <br>
-                                Op. Inafecta: <br>
-                                Op. Exoneradas: <br><br>
-                                IGV:<br>
-                                Importe Total:
-                            </strong>
-                        </div>
-                        <div class="col-xs-1">
-                            {{fb_cab[[6]]}}<br>
-                            {{fb_cab[[6]]}}<br>
-                            {{fb_cab[[6]]}}<br>
-                            {{fb_cab[[6]]}}<br><br>
-                            {{fb_cab[[6]]}}<br>
-                            {{fb_cab[[6]]}}
-                        </div>
-                        <div class="col-xs-2 text-xs-right">
-                            <strong>
-                                {{fb_cab[9] | number:2}}<br>
-                                {{fb_cab[10] | number:2}}<br>
-                                0.00<br>
-                                0.00<br><br>
-                                {{fb_cab[13] | number:2}}<br>
-                                {{fb_cab[16] | number:2}}
-                            </strong>
-                        </div>
-                    </div> 
-                </div>
+                <table class="table table-sm table-hover" ng-if="cla_doc=='FS' || cla_doc=='FR' || cla_doc=='BS' || cla_doc=='BR' || cla_doc=='FC'">
+                    <tr>
+                        <td colspan="2" class="text-xs-left">
+                            <i class="fa fa-calendar-o"></i> Fecha Emision 
+                        </td>
+                        <td class="text-xs-left">
+                            : {{fb_cab[1] | date:'dd-MM-yyyy'}}
+                        </td>
+                        <td colspan="4" class="text-xs-right">
+                            <strong>R.U.C. 20532710066</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-xs-left">
+                            <i class="fa fa-user-o"></i> Señor(es) 
+                        </td>
+                        <td class="text-xs-left">
+                            : {{fb_cab[5]}}
+                        </td>
+                        <td colspan="4" class="text-xs-right">
+                            SURMOTRIZ S.R.L
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-xs-left">
+                            <i class="fa fa-eye"></i> R.U.C
+                        </td>
+                        <td class="text-xs-left">
+                            : {{fb_cab[[4]]}}
+                        </td>
+                        <td colspan="4" class="text-xs-right">
+                            Avenida Leguia 1870
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-xs-left">
+                            <i class="fa fa-money"></i> Tipo Moneda
+                        </td>
+                        <td class="text-xs-left">
+                            : {{fb_cab[[6]]}}
+                        </td>
+                        <td colspan="4" class="text-xs-right">
+                            Telefono: (052) 426368
+                        </td>
+                    </tr>
+                    <tr class="table-warning">                        
+                        <th width="5%">#</th>
+                        <th width="13%">Codigo</th>
+                        <th width="55%">Descripcion</th>
+                        <th class="text-xs-center">Cant</th>
+                        <th class="text-xs-right">V. Unit</th>
+                        <th class="text-xs-right">Desc</th>
+                        <th class="text-xs-right">V. Venta</th>
+                    </tr>
+
+                    <tr ng-repeat="dd in dds" ng-if="tip_imp=='D' && (co_cr_an=='CO' || co_cr_an=='CR')">
+                        <td>{{$index+1}}</td>
+                        <td>{{dd[2]}}</td>
+                        <td>{{dd[4]}}</td>
+                        <td class="text-xs-center">{{dd[1]}}</td>
+                        <td class="text-xs-right">{{dd[5] | number:2}}</td>
+                        <td class="text-xs-right">{{dd[6] | number:2}}</td>
+                        <td class="text-xs-right">{{dd[12] | number:2}}</td>
+                    </tr>
+                    <tr ng-if="tip_imp=='R' && (co_cr_an=='CO' || co_cr_an=='CR')">
+                        <td>-</td>
+                        <td>-</td>
+                        <td>{{fb_cab[[19]]}}</td>
+                        <td class="text-xs-right">-</td>
+                        <td class="text-xs-right">-</td>
+                        <td class="text-xs-right">-</td>
+                        <td class="text-xs-right">-</td>
+                    </tr>
+                    <tr ng-if="co_cr_an=='AN'">
+                        <td>-</td>
+                        <td>-</td>
+                        <td>{{fb_cab[[18]]}}</td>
+                        <td class="text-xs-right">-</td>
+                        <td class="text-xs-right">-</td>
+                        <td class="text-xs-right">-</td>
+                        <td class="text-xs-right">-</td>
+                    </tr>
+
+
+
+                    <tr class="table-warning">
+                        <td colspan="5" class="text-xs-right"><strong>Monto Descuentos</strong> </td>
+                        <td class="text-xs-right"><strong>{{fb_cab[[6]]}}</strong></td>
+                        <td class="text-xs-right"><strong>{{fb_cab[9] | number:2}}</strong></td>                            
+                    </tr class="table-warning">
+                    <tr class="table-warning">
+                        <td colspan="5" class="text-xs-right"><strong>Op. Gravadas</strong> </td>
+                        <td class="text-xs-right"><strong>{{fb_cab[[6]]}}</strong></td>
+                        <td class="text-xs-right"><strong>{{fb_cab[10] | number:2}}</strong></td>                            
+                    </tr>
+                    <tr class="table-warning">
+                        <td colspan="5" class="text-xs-right">Op. Inafecta </td>
+                        <td class="text-xs-right">{{fb_cab[[6]]}}</td>
+                        <td class="text-xs-right">0.00</td>                            
+                    </tr>
+                    <tr class="table-warning">
+                        <td colspan="5" class="text-xs-right">Op. Exoneradas </td>
+                        <td class="text-xs-right">{{fb_cab[[6]]}}</td>
+                        <td class="text-xs-right">0.00</td>                            
+                    </tr>
+                    <tr class="table-warning">
+                        <td colspan="5" class="text-xs-right"><strong>IGV</strong> </td>
+                        <td class="text-xs-right"><strong>{{fb_cab[[6]]}}</strong></td>
+                        <td class="text-xs-right"><strong>{{fb_cab[13] | number:2}}</strong></td>                            
+                    </tr>
+                    <tr class="table-warning">
+                        <td colspan="5" class="text-xs-right"><strong>Importe Total</strong> </td>
+                        <td class="text-xs-right"><strong>{{fb_cab[[6]]}}</strong></td>
+                        <td class="text-xs-right"><strong>{{fb_cab[16] | number:2}}</strong></td>                            
+                    </tr>
+                </table>
+
+
+
                 <!-- Nota Credito -->
-                <div ng-if="cla_doc=='AS' || cla_doc=='AR'">
-                    <div class="row">
-                        <div class="col-xs-8 text-xs-left">
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <strong>Facturado A:</strong><br>
-                                    <strong><i class="fa fa-calendar-o"></i> Fecha Emision : </strong><br>
-                                    <strong><i class="fa fa-user-o"></i> Motivo : </strong><br>
-                                    <strong><i class="fa fa-eye"></i> Documento : </strong><br>
-                                    <strong><i class="fa fa-address-card-o"></i> Razon Social : </strong><br>
-                                    <strong><i class="fa fa-money"></i> Tipo Moneda : </strong>
-                                </div>
-                                <div class="col-xs-8">
-                                    <br>
-                                    {{fb_cab[0] | date:'dd-MM-yyyy'}}<br>
-                                    {{fb_cab[2]}} <br>
-                                    {{fb_cab[[6]]}} <br>
-                                    {{fb_cab[[7]]}} <br>
-                                    {{fb_cab[[8]]}}        
-                                </div>
-                            </div>                            
-                        </div>
-                        <div class="col-xs-4 text-xs-right">
-                            <strong>Facturado Por:</strong><br>
-                            <span>R.U.C. 20532710066</span><br>
-                            <span>Surmotriz S.R.L</span><br>
-                            <span>Avenida Leguia 1870</span>
-                        </div>
-                    </div>
-                    <table class="table">
-                        <thead class="thead-default">
-                            <tr>
-                                <th>Cantidad</th>
-                                <th>Und Medida</th>
-                                <th>Codigo</th>
-                                <th>Descripcion</th>
-                                <th>Valor Unitario</th>
-                                <th>Descuento</th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="row">
-                        <div class="offset-xs-6 col-xs-3 text-xs-right">
-                            <strong>
-                                Monto Descuentos:<br>
-                                Op. Gravadas: <br>
-                                Op. Inafecta: <br>
-                                Op. Exoneradas: <br><br>
-                                IGV:<br>
-                                Importe Total:
-                            </strong>
-                        </div>
-                        <div class="col-xs-1">
-                            {{fb_cab[[8]]}}<br>
-                            {{fb_cab[[8]]}}<br>
-                            {{fb_cab[[8]]}}<br>
-                            {{fb_cab[[8]]}}<br><br>
-                            {{fb_cab[[8]]}}<br>
-                            {{fb_cab[[8]]}}
-                        </div>
-                        <div class="col-xs-2 text-xs-right">
-                            <strong>
-                                {{fb_cab[9] | number:2}}<br>
-                                {{fb_cab[10] | number:2}}<br>
-                                0.00<br>
-                                0.00<br><br>
-                                {{fb_cab[13] | number:2}}<br>
-                                {{fb_cab[16] | number:2}}
-                            </strong>
-                        </div>
-                    </div> 
-                </div>
+                <table class="table table-sm table-hover" ng-if="cla_doc=='AR' || cla_doc=='AS' ">
+                    <tr>
+                        <td colspan="2" class="text-xs-left">
+                            <i class="fa fa-calendar-o"></i> Fecha y Moneda 
+                        </td>
+                        <td class="text-xs-left">
+                            : {{fb_cab[0] | date:'dd-MM-yyyy'}} | {{fb_cab[8]}}
+                        </td>
+                        <td colspan="4" class="text-xs-right">
+                            <strong>R.U.C. 20532710066</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-xs-left">
+                            <i class="fa fa-user-o"></i> Modifica 
+                        </td>
+                        <td class="text-xs-left">
+                            : {{fb_cab[4]}}
+                        </td>
+                        <td colspan="4" class="text-xs-right">
+                            SURMOTRIZ S.R.L
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-xs-left">
+                            <i class="fa fa-eye"></i> Nombre
+                        </td>
+                        <td class="text-xs-left">
+                            : {{fb_cab[[7]]}}
+                        </td>
+                        <td colspan="4" class="text-xs-right">
+                            Avenida Leguia 1870
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-xs-left">
+                            <i class="fa fa-money"></i> Documento
+                        </td>
+                        <td class="text-xs-left">
+                            : {{fb_cab[[6]]}}
+                        </td>
+                        <td colspan="4" class="text-xs-right">
+                            Telefono: (052) 426368
+                        </td>
+                    </tr>
+                    <tr class="table-warning">                        
+                        <th width="5%">#</th>
+                        <th width="13%">Codigo</th>
+                        <th width="50%">Descripcion</th>
+                        <th class="text-xs-center">Cant</th>
+                        <th class="text-xs-right">V. Unit</th>
+                        <th class="text-xs-right">Desc</th>
+                        <th class="text-xs-right">V. Venta</th>
+                    </tr>
+
+                    <tr ng-repeat="dd in dds" ng-if="tip_imp=='D' && (co_cr_an=='CO' || co_cr_an=='CR')">
+                        <td>{{$index+1}}</td>
+                        <td>{{dd[2]}}</td>
+                        <td>{{dd[4]}}</td>
+                        <td class="text-xs-center">{{dd[1]}}</td>
+                        <td class="text-xs-right">{{dd[5] | number:2}}</td>
+                        <td class="text-xs-right">{{dd[6] | number:2}}</td>
+                        <td class="text-xs-right">{{dd[12] | number:2}}</td>
+                    </tr>
+                    <tr ng-if="tip_imp=='R' && (co_cr_an=='CO' || co_cr_an=='CR')">
+                        <td>-</td>
+                        <td>-</td>
+                        <td>{{fb_cab[[19]]}}</td>
+                        <td class="text-xs-right">-</td>
+                        <td class="text-xs-right">-</td>
+                        <td class="text-xs-right">-</td>
+                        <td class="text-xs-right">-</td>
+                    </tr>
+                    <tr ng-if="co_cr_an=='AN'">
+                        <td>-</td>
+                        <td>-</td>
+                        <td>{{fb_cab[[18]]}}</td>
+                        <td class="text-xs-right">-</td>
+                        <td class="text-xs-right">-</td>
+                        <td class="text-xs-right">-</td>
+                        <td class="text-xs-right">-</td>
+                    </tr>
+
+
+
+                    <tr class="table-warning">
+                        <td colspan="5" class="text-xs-right"><strong>Monto Descuentos</strong> </td>
+                        <td class="text-xs-right"><strong>{{fb_cab[[8]]}}</strong></td>
+                        <td class="text-xs-right"><strong>{{fb_cab[9] | number:2}}</strong></td>                            
+                    </tr class="table-warning">
+                    <tr class="table-warning">
+                        <td colspan="5" class="text-xs-right"><strong>Op. Gravadas</strong> </td>
+                        <td class="text-xs-right"><strong>{{fb_cab[[8]]}}</strong></td>
+                        <td class="text-xs-right"><strong>{{fb_cab[10] | number:2}}</strong></td>                            
+                    </tr>
+                    <tr class="table-warning">
+                        <td colspan="5" class="text-xs-right">Op. Inafecta </td>
+                        <td class="text-xs-right">{{fb_cab[[8]]}}</td>
+                        <td class="text-xs-right">0.00</td>                            
+                    </tr>
+                    <tr class="table-warning">
+                        <td colspan="5" class="text-xs-right">Op. Exoneradas </td>
+                        <td class="text-xs-right">{{fb_cab[[8]]}}</td>
+                        <td class="text-xs-right">0.00</td>                            
+                    </tr>
+                    <tr class="table-warning">
+                        <td colspan="5" class="text-xs-right"><strong>IGV</strong> </td>
+                        <td class="text-xs-right"><strong>{{fb_cab[[8]]}}</strong></td>
+                        <td class="text-xs-right"><strong>{{fb_cab[13] | number:2}}</strong></td>                            
+                    </tr>
+                    <tr class="table-warning">
+                        <td colspan="5" class="text-xs-right"><strong>Importe Total</strong> </td>
+                        <td class="text-xs-right"><strong>{{fb_cab[[8]]}}</strong></td>
+                        <td class="text-xs-right"><strong>{{fb_cab[16] | number:2}}</strong></td>                            
+                    </tr>
+                </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" ng-click="descargar(documento)">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+                <button type="button" class="btn btn-primary" ng-click="ver(doc,'S','N')"><i class="fa fa-download"></i> Cabezera</button>
+                <button type="button" class="btn btn-success" ng-click="ver(doc,'N','S')"><i class="fa fa-download"></i> Detalle</button>
             </div>
             </div>
         </div>
