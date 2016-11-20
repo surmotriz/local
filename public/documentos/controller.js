@@ -64,9 +64,13 @@ app.controller('documentosIndexCtlr', function($scope, $http, FileSaver, Blob){
 				if (tip_imp=='D'){
 					$http.get( '/apis/dds/'+$scope.num_doc+'/'+$scope.cla_doc+'/'+$scope.moneda).success(function(data){
 						$scope.dds = data;
+						if($scope.det=='S'){
+							var data = new Blob(data[0], { type: 'text/plain;charset=utf-8' });
+							FileSaver.saveAs(data, 'detalle.det');
+						}
 					});
 				}else if ($scope.tip_imp=='R'){ // impresion con resumen
-					
+
 				}				
 			}else if ($scope.co_cr_an=='AN'){ 
 			
