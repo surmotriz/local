@@ -1,10 +1,10 @@
 app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, FileSaver, Blob){	
 
 	$scope.pag = parseInt($stateParams.pag);
-	$scope.f_inicial = $stateParams.f_inicial;
-	$scope.f_final = $stateParams.f_final;
+	$scope.fecha = $stateParams.fecha;
+	$scope.dias = parseInt($stateParams.dias);
 
-	$http.get('/apis/docs/'+$scope.pag).success(function(data){
+	$http.get('/apis/docs/'+$scope.pag+'/'+$scope.fecha+'/'+$scope.dias+'/').success(function(data){
 		$scope.docs = data;
 	});
 

@@ -10,12 +10,14 @@ var conexion = {
     connectString : dbConfig.connectString     
 }
 
-router.get('/docs/:pag/', function(req, res){
+router.get('/docs/:pag/:fecha/:dias/', function(req, res){
     oracledb.getConnection(conexion, function (err, conexion) {
         conexion.execute(
-            "BEGIN PKG_ELECTRONICA.DOCS(:pag, :docs); END;",
+            "BEGIN PKG_ELECTRONICA.DOCS(:pag, :fecha, :dias, :docs); END;",
             {
                 pag: { val: req.params.pag, dir:oracledb.BIND_IN }, 
+                fecha: { val: req.params.fecha, type:oracledb.STRING },                
+                dias: { val: req.params.dias, dir:oracledb.BIND_IN },                 
                 docs: { type: oracledb.CURSOR, dir: oracledb.BIND_OUT }
             },
             function (err, result) {
