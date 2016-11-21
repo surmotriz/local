@@ -1,5 +1,43 @@
 <div class="container">	
-	<table class="table table-hover">
+    <div class="row">
+        <div class="col-xs-6">            
+            <form class="form-inline">
+                <div class="form-group">        
+                    <input type="date" class="form-control" >        
+                </div>
+                <div class="form-group">        
+                    <input type="date" class="form-control">        
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+            </form>
+        </div>
+        <div class="col-xs-6 ">
+            <!-- Pagination -->
+            <nav class="text-xs-right">
+              <ul class="pagination" style='margin: 0px; padding: 0px;'>
+                <li ng-class="pag==1 ? 'page-item disabled' : 'page-item'">
+                  <a class="page-link" href="#/documentos/{{pag-1}}/" tabindex="-1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+                <li ng-class="pag==1 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{1}}/">1</a></li>
+                <li ng-class="pag==2 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{2}}/">2</a></li>
+                <li ng-class="pag==3 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{3}}/">3</a></li>
+                <li ng-class="pag==4 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{4}}/">4</a></li>
+                <li ng-class="pag==5 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{5}}/">5</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#/documentos/{{pag+1}}/" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+        </div>
+    </div>    
+
+	<table class="table table-hover table-striped">
 		<tr>
 			<th class="text-xs-center">#</th>
 			<th class="text-xs-left">Num</th>
@@ -11,20 +49,20 @@
             <th>Imp</th>
 			<th class="text-xs-right">Total</th>
             <th>Mon</th>
-			<th>Acciones</th>
+			<th class="text-xs-center">Acciones</th>
 		</tr>
-		<tr ng-repeat="doc in docs">			
-			<td class="text-xs-center">{{$index + 1}}</td>
+		<tr ng-repeat="doc in docs">						
 			<td class="text-xs-left">{{doc[0]}}</td>  
-			<td>{{doc[1] | date:'dd-MM-yyyy'}}</td>   
-			<td>{{doc[2].substr(0, 25)}}</td>  
-			<td>{{doc[3]}}</td>   
+			<td>{{doc[1] }}</td>   
+			<td>{{doc[2] | date:'dd-MM-yyyy'}}</td>  
+			<td>{{doc[3].substr(0, 25)}}</td>   
 			<td>{{doc[4]}}</td>   
             <td>{{doc[5]}}</td>   
             <td>{{doc[6]}}</td>   
-			<td class="text-xs-right">{{ doc[7] | number:2 }}</td> 
-            <td>{{doc[8]}}</td>
-			<td>                
+			<td class="text-xs-right">{{ doc[7] }}</td> 
+            <td>{{doc[8] | number:2 }}</td>
+            <td>{{doc[9]}}</td>
+			<td class="text-xs-center">                
                 <i style="cursor: pointer;" 
                 class="fa fa-file-text-o"
                 data-target="#myModal" 
@@ -34,6 +72,30 @@
 			</td>
 		</tr>
 	</table>
+
+    <!-- Pagination -->
+    <nav class="text-xs-right">
+      <ul class="pagination" style='margin: 0px; padding: 0px;'>
+        <li ng-class="pag==1 ? 'page-item disabled' : 'page-item'">
+          <a class="page-link" href="#/documentos/{{pag-1}}/" tabindex="-1" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        <li ng-class="pag==1 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{1}}/">1</a></li>
+        <li ng-class="pag==2 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{2}}/">2</a></li>
+        <li ng-class="pag==3 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{3}}/">3</a></li>
+        <li ng-class="pag==4 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{4}}/">4</a></li>
+        <li ng-class="pag==5 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{5}}/">5</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#/documentos/{{pag+1}}/" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
 	<!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document" >
@@ -170,8 +232,6 @@
                         <td class="text-xs-right"><strong>{{fb_cab[16] | number:2}}</strong></td>                            
                     </tr>
                 </table>
-
-
 
                 <!-- Nota Credito -->
                 <table class="table table-sm table-hover" ng-if="cla_doc=='AR' || cla_doc=='AS' ">

@@ -1,7 +1,13 @@
-app.controller('documentosIndexCtlr', function($scope, $http, FileSaver, Blob){
-	$http.get('/apis/docs').success(function(data){
+app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, FileSaver, Blob){	
+
+	$scope.pag = parseInt($stateParams.pag);
+	$scope.f_inicial = $stateParams.f_inicial;
+	$scope.f_final = $stateParams.f_final;
+
+	$http.get('/apis/docs/'+$scope.pag).success(function(data){
 		$scope.docs = data;
 	});
+
 	$scope.ver = function(doc,cab,det){	
 		$scope.num_doc = doc[0];
 		$scope.cla_doc = doc[3];
@@ -18,31 +24,65 @@ app.controller('documentosIndexCtlr', function($scope, $http, FileSaver, Blob){
 		if ($scope.cla_doc=='FS' || $scope.cla_doc=='FR' || $scope.cla_doc=='BS' || $scope.cla_doc=='BR' || $scope.cla_doc=='FC'){ // Factura y Boleta			
 
 			// cabezera
+			
 			$http.get( '/apis/fbc/'+$scope.num_doc).success(function(data){
 				$scope.fb_cab = data[0];
-				// genera cabezera txt
+							
+				// txt cabezera								
 				if($scope.cab=='S'){
-					var data = new Blob(data[0], { type: 'text/plain;charset=utf-8' });
-					FileSaver.saveAs(data, 'cabezera.cab');	
+					var i=0;
+					var cabe = '';
+					data[0].forEach(function(entry) {
+						if(i<=16){
+							cabe += entry+'|';							
+						}
+	    				i++;
+
+					});	
+					var cabezera = new Blob([cabe], { type: 'text/plain;charset=utf-8' });
+					FileSaver.saveAs(cabezera, data[0][17]);	
+				}
+
+				// detalle
+				if($scope.co_cr_an=='CO' || $scope.co_cr_an=='CR'){				
+					if ($scope.tip_imp=='D'){
+						$http.get( '/apis/dds/'+$scope.num_doc+'/'+$scope.cla_doc+'/'+$scope.moneda).success(function(data1){
+							$scope.dds = data1;
+
+							// genera txt det
+							if($scope.det=='S'){
+								var deta = '';
+								var i=0;
+								data1.forEach(function(){
+									data1[i].forEach(function(entry){
+										deta += entry+'|';										
+									});
+									deta += '\r\n';
+									i++;
+								});
+									
+								var detalle = new Blob([deta], { type: 'text/plain;charset=utf-8' });
+								FileSaver.saveAs(detalle, data[0][20]);
+							}
+						});
+					}else if ($scope.tip_imp=='R'){ // impresion con resumen
+						if($scope.det=='S'){
+							var deta = 'NIU||||'+ data[0][19] +'|||||||||';
+							var detalle = new Blob([deta], { type: 'text/plain;charset=utf-8' });
+							FileSaver.saveAs(detalle, data[0][20]);
+						}
+						
+					}
+				}else if($scope.co_cr_an=='AN'){ // si es anticipo tiene un detalle
+					if($scope.det=='S'){
+						var deta = 'NIU||||'+ data[0][18] +'|||||||||';
+						var detalle = new Blob([deta], { type: 'text/plain;charset=utf-8' });
+						FileSaver.saveAs(detalle, data[0][20]);
+					}
 				}
 			});
 
-			// detalle
-			if($scope.co_cr_an=='CO' || $scope.co_cr_an=='CR'){				
-				if ($scope.tip_imp=='D'){
-					$http.get( '/apis/dds/'+$scope.num_doc+'/'+$scope.cla_doc+'/'+$scope.moneda).success(function(data){
-						$scope.dds = data;
-						if($scope.det=='S'){
-							var data = new Blob(data[0], { type: 'text/plain;charset=utf-8' });
-							FileSaver.saveAs(data, 'detalle.det');
-						}
-					});
-				}else if ($scope.tip_imp=='R'){ // impresion con resumen
-					
-				}
-			}else if($scope.co_cr_an=='AN'){ // si es anticipo tiene un detalle
 				
-			}
 				
 			
 			
@@ -52,29 +92,59 @@ app.controller('documentosIndexCtlr', function($scope, $http, FileSaver, Blob){
 			// cabezera
 			$http.get('/apis/ncc/'+$scope.num_doc).success(function(data){
 				$scope.fb_cab = data[0];
+
 				// genera cabezera txt
 				if($scope.cab=='S'){
-					var data = new Blob(data[0], { type: 'text/plain;charset=utf-8' });
-					FileSaver.saveAs(data, 'cabezera.cab');	
-				}
-			});
-
-			// detalle
-			if($scope.co_cr_an=='CO' || $scope.co_cr_an=='CR'){
-				if (tip_imp=='D'){
-					$http.get( '/apis/dds/'+$scope.num_doc+'/'+$scope.cla_doc+'/'+$scope.moneda).success(function(data){
-						$scope.dds = data;
-						if($scope.det=='S'){
-							var data = new Blob(data[0], { type: 'text/plain;charset=utf-8' });
-							FileSaver.saveAs(data, 'detalle.det');
+					var i=0;
+					var cabe = '';
+					data[0].forEach(function(entry) {
+						if(i<=16){
+							cabe += entry+'|';							
 						}
-					});
-				}else if ($scope.tip_imp=='R'){ // impresion con resumen
+	    				i++;
 
-				}				
-			}else if ($scope.co_cr_an=='AN'){ 
-			
-			}
+					});	
+					var cabezera = new Blob([cabe], { type: 'text/plain;charset=utf-8' });
+					FileSaver.saveAs(cabezera, data[0][17]);	
+				}
+
+				// detalle
+				if($scope.co_cr_an=='CO' || $scope.co_cr_an=='CR'){
+					if ($scope.tip_imp=='D'){
+						$http.get( '/apis/dds/'+$scope.num_doc+'/'+$scope.cla_doc+'/'+$scope.moneda).success(function(data1){
+							$scope.dds = data1;
+							// genera txt det
+							if($scope.det=='S'){
+								var deta = '';
+								var i=0;
+								data1.forEach(function(){
+									data1[i].forEach(function(entry){
+										deta += entry+'|';										
+									});
+									deta += '\r\n';
+									i++;
+								});
+									
+								var detalle = new Blob([deta], { type: 'text/plain;charset=utf-8' });
+								FileSaver.saveAs(detalle, data[0][20]);
+							}
+						});
+					}else if ($scope.tip_imp=='R'){ // impresion con resumen
+						if($scope.det=='S'){
+							var deta = 'NIU||||'+ data[0][19] +'|||||||||';
+							var detalle = new Blob([deta], { type: 'text/plain;charset=utf-8' });
+							FileSaver.saveAs(detalle, data[0][20]);
+						}
+					}				
+				}else if ($scope.co_cr_an=='AN'){ 
+					if($scope.det=='S'){
+						var deta = 'NIU||||'+ data[0][18] +'|||||||||';
+						var detalle = new Blob([deta], { type: 'text/plain;charset=utf-8' });
+						FileSaver.saveAs(detalle, data[0][20]);
+					}
+				} 
+
+			});
 			
 		}
 

@@ -2,7 +2,7 @@ var app = angular.module("surmotriz", ['ui.router', 'ngFileSaver']);
 
 app.config(function ($stateProvider, $urlRouterProvider){
 
-	$urlRouterProvider.otherwise("/documentos");
+	$urlRouterProvider.otherwise("/documentos/1/");
 
 	$stateProvider
 		.state('inicios', {
@@ -14,7 +14,7 @@ app.config(function ($stateProvider, $urlRouterProvider){
 			}
 		})
 		.state('documentos', { 
-			url: "/documentos",
+			url: "/documentos/:pag/",
 			views: {
 				"header": { templateUrl: "shared/layout/header.html" },
 				"contenido": { templateUrl: "documentos/index.html", controller: 'documentosIndexCtlr' },
