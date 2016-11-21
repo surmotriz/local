@@ -29,8 +29,7 @@ app.controller('documentosIndexCtlr', function($scope, $http, FileSaver, Blob){
 					var cabe = '';
 					data[0].forEach(function(entry) {
 						if(i<=16){
-							cabe += entry+'|';
-							console.log(entry);
+							cabe += entry+'|';							
 						}
 	    				i++;
 
@@ -51,8 +50,7 @@ app.controller('documentosIndexCtlr', function($scope, $http, FileSaver, Blob){
 								var i=0;
 								data1.forEach(function(){
 									data1[i].forEach(function(entry){
-										deta += entry+'|';
-										console.log(entry);
+										deta += entry+'|';										
 									});
 									deta += '\r\n';
 									i++;
