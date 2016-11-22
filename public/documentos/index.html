@@ -1,20 +1,14 @@
 <div class="container">	
     <div class="row">
         <div class="col-xs-6">            
-            <form class="form-inline">
+            <form class="form-inline" >
                 <div class="form-group">        
-                    <input type="text" class="form-control" ng-model="fecha1" placeholder="10-09-2016">
+                    <input type="date" class="form-control" ng-model="fecha111" value="{{fecha11}}">
                 </div>
-                <div class="form-group">                
-                    <select class="form-control" ng-model="dias">                        
-                        <option value="1" ng-selected="dias==1 || dias==0">1 Dia</option>
-                        <option value="2" ng-selected="dias==2">2 Dias</option>
-                        <option value="3" ng-selected="dias==3">3 Dias</option>
-                        <option value="4" ng-selected="dias==4">4 Dias</option>
-                        <option value="7" ng-selected="dias==7">1 Semana</option>
-                    </select>
-                </div>       
-                <a href="#/documentos/1/{{fecha1}}/{{dias}}/" class="btn btn-primary">
+                <div class="form-group">        
+                    <input type="date" class="form-control" ng-model="fecha222" value="{{fecha22}}">
+                </div>                   
+                <a href="#/documentos/1/{{fecha111 | date:'yyyy-MM-dd'}}/{{fecha222 | date:'yyyy-MM-dd'}}/" class="btn btn-primary">
                     <i class="fa fa-search"></i> Buscar
                 </a>                
             </form>
@@ -24,18 +18,18 @@
             <nav class="text-xs-right">
               <ul class="pagination" style='margin: 0px; padding: 0px;'>
                 <li ng-class="pag==1 ? 'page-item disabled' : 'page-item'">
-                  <a class="page-link" href="#/documentos/{{pag-1}}/{{fecha}}/{{dias}}/" tabindex="-1" aria-label="Previous">
+                  <a class="page-link" href="#/documentos/{{pag-1}}/{{fecha1}}/{{fecha2}}/" tabindex="-1" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                     <span class="sr-only">Previous</span>
                   </a>
                 </li>
-                <li ng-class="pag==1 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{1}}/{{fecha}}/{{dias}}/">1</a></li>
-                <li ng-class="pag==2 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{2}}/{{fecha}}/{{dias}}/">2</a></li>
-                <li ng-class="pag==3 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{3}}/{{fecha}}/{{dias}}/">3</a></li>
-                <li ng-class="pag==4 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{4}}/{{fecha}}/{{dias}}/">4</a></li>
-                <li ng-class="pag==5 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{5}}/{{fecha}}/{{dias}}/">5</a></li>
+                <li ng-class="pag==1 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{1}}/{{fecha1}}/{{fecha2}}/">1</a></li>
+                <li ng-class="pag==2 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{2}}/{{fecha1}}/{{fecha2}}/">2</a></li>
+                <li ng-class="pag==3 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{3}}/{{fecha1}}/{{fecha2}}/">3</a></li>
+                <li ng-class="pag==4 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{4}}/{{fecha1}}/{{fecha2}}/">4</a></li>
+                <li ng-class="pag==5 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{5}}/{{fecha1}}/{{fecha2}}/">5</a></li>
                 <li class="page-item">
-                  <a class="page-link" href="#/documentos/{{pag+1}}/{{fecha}}/{{dias}}/" aria-label="Next">
+                  <a class="page-link" href="#/documentos/{{pag+1}}/{{fecha1}}/{{fecha2}}/" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                     <span class="sr-only">Next</span>
                   </a>

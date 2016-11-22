@@ -1,15 +1,17 @@
 app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, FileSaver, Blob){	
 
 	$scope.pag = parseInt($stateParams.pag);
-	$scope.fecha = $stateParams.fecha;
-	if($scope.fecha=='N'){
-		$scope.fecha1 = ''
-	}else{
-		$scope.fecha1 = $scope.fecha;
+	$scope.fecha1 = $stateParams.fecha1;
+	$scope.fecha2 = $stateParams.fecha2;
+	if($scope.fecha1=='N' && $scope.fecha2=='N'){
+		$scope.fecha11= '';
+		$scope.fecha22= '';
+	}else if($scope.fecha1!='N' && $scope.fecha2!='N'){
+		$scope.fecha11= $scope.fecha1;
+		$scope.fecha22= $scope.fecha2;
 	}
-	$scope.dias = parseInt($stateParams.dias);
 
-	$http.get('/apis/docs/'+$scope.pag+'/'+$scope.fecha+'/'+$scope.dias+'/').success(function(data){
+	$http.get('/apis/docs/'+$scope.pag+'/'+$scope.fecha1+'/'+$scope.fecha2+'/').success(function(data){
 		$scope.docs = data;
 	});
 
