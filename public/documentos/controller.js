@@ -2,6 +2,11 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 
 	$scope.pag = parseInt($stateParams.pag);
 	$scope.fecha = $stateParams.fecha;
+	if($scope.fecha=='N'){
+		$scope.fecha1 = ''
+	}else{
+		$scope.fecha1 = $scope.fecha;
+	}
 	$scope.dias = parseInt($stateParams.dias);
 
 	$http.get('/apis/docs/'+$scope.pag+'/'+$scope.fecha+'/'+$scope.dias+'/').success(function(data){
@@ -9,12 +14,12 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 	});
 
 	$scope.ver = function(doc,cab,det){	
-		$scope.num_doc = doc[0];
-		$scope.cla_doc = doc[3];
-		$scope.co_cr_an = doc[4];
-		$scope.exi_fra = doc[5];
-		$scope.tip_imp = doc[6];
-		$scope.moneda = doc[8];		
+		$scope.num_doc = doc[1];
+		$scope.cla_doc = doc[4];
+		$scope.co_cr_an = doc[5];
+		$scope.exi_fra = doc[6];
+		$scope.tip_imp = doc[7];
+		$scope.moneda = doc[9];		
 		$scope.cab = cab;
 		$scope.det = det;
 		$scope.doc = doc;		
