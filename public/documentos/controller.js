@@ -138,14 +138,14 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 						});
 					}else if ($scope.tip_imp=='R'){ // impresion con resumen
 						if($scope.det=='S'){
-							var deta = 'NIU||||'+ data[0][19] +'|||||||||';
+							var deta = 'NIU|0|0|0|'+ data[0][19] +'|0|0|0|0|0|0|0|0|';
 							var detalle = new File([deta], { type: 'text/plain;charset=utf-8' });
 							FileSaver.saveAs(detalle, data[0][20]);
 						}
 					}				
 				}else if ($scope.co_cr_an=='AN'){ 
 					if($scope.det=='S'){
-						var deta = 'NIU||||'+ data[0][18] +'|||||||||';
+						var deta = 'NIU|0|0|0|'+ data[0][18] +'|0|0|0|0|0|0|0|0|';
 						var detalle = new File([deta], { type: 'text/plain;charset=utf-8' });
 						FileSaver.saveAs(detalle, data[0][20]);
 					}
