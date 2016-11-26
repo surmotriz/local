@@ -69,12 +69,12 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 								});
 									
 								var detalle = new File([deta], { type: 'text/plain;charset=utf-8' });
-								FileSaver.saveAs(detalle, data[0][20]);
+								FileSaver.saveAs(detalle, data[0][20]); 
 							}
 						});
 					}else if ($scope.tip_imp=='R'){ // impresion con resumen
 						if($scope.det=='S'){
-							var deta = 'NIU||||'+ data[0][19] +'|||||||||';
+							var deta = 'NIU|0.00|0|0|'+ data[0][19] +'|0.00|0.00|0.00|30|0.00|02|0.00|0.00|';
 							var detalle = new File([deta], { type: 'text/plain;charset=utf-8' });
 							FileSaver.saveAs(detalle, data[0][20]);
 						}
@@ -82,7 +82,7 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 					}
 				}else if($scope.co_cr_an=='AN'){ // si es anticipo tiene un detalle
 					if($scope.det=='S'){
-						var deta = 'NIU||||'+ data[0][18] +'|||||||||';
+						var deta = 'NIU|0.00|0|0|'+ data[0][18] +'|0.00|0.00|0.00|30|0.00|02|0.00|0.00|';
 						var detalle = new File([deta], { type: 'text/plain;charset=utf-8' });
 						FileSaver.saveAs(detalle, data[0][20]);
 					}
@@ -138,14 +138,14 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 						});
 					}else if ($scope.tip_imp=='R'){ // impresion con resumen
 						if($scope.det=='S'){
-							var deta = 'NIU|0|0|0|'+ data[0][19] +'|0|0|0|0|0|0|0|0|';
+							var deta = 'NIU|0.00|0|0|'+ data[0][19] +'|0.00|0.00|0.00|30|0.00|02|0.00|0.00|';
 							var detalle = new File([deta], { type: 'text/plain;charset=utf-8' });
 							FileSaver.saveAs(detalle, data[0][20]);
 						}
 					}				
 				}else if ($scope.co_cr_an=='AN'){ 
 					if($scope.det=='S'){
-						var deta = 'NIU|0|0|0|'+ data[0][18] +'|0|0|0|0|0|0|0|0|';
+						var deta = 'NIU|0.00|0|0|'+ data[0][18] +'|0.00|0.00|0.00|30|0|02|0|0|';
 						var detalle = new File([deta], { type: 'text/plain;charset=utf-8' });
 						FileSaver.saveAs(detalle, data[0][20]);
 					}

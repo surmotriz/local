@@ -1,7 +1,7 @@
 <div class="container">	
     <div class="row">
         <div class="col-xs-6">            
-            <form class="form-inline" >
+            <form class="form-inline" > 
                 <div class="form-group">        
                     <input type="date" class="form-control" ng-model="fecha111" value="{{fecha11}}">
                 </div>
@@ -79,18 +79,18 @@
     <nav class="text-xs-right">
       <ul class="pagination" style='margin: 0px; padding: 0px;'>
         <li ng-class="pag==1 ? 'page-item disabled' : 'page-item'">
-          <a class="page-link" href="#/documentos/{{pag-1}}/" tabindex="-1" aria-label="Previous">
+          <a class="page-link" href="#/documentos/{{pag-1}}/{{fecha1}}/{{fecha2}}/" tabindex="-1" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
             <span class="sr-only">Previous</span>
           </a>
         </li>
-        <li ng-class="pag==1 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{1}}/">1</a></li>
-        <li ng-class="pag==2 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{2}}/">2</a></li>
-        <li ng-class="pag==3 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{3}}/">3</a></li>
-        <li ng-class="pag==4 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{4}}/">4</a></li>
-        <li ng-class="pag==5 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{5}}/">5</a></li>
+        <li ng-class="pag==1 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{1}}/{{fecha1}}/{{fecha2}}/">1</a></li>
+        <li ng-class="pag==2 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{2}}/{{fecha1}}/{{fecha2}}/">2</a></li>
+        <li ng-class="pag==3 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{3}}/{{fecha1}}/{{fecha2}}/">3</a></li>
+        <li ng-class="pag==4 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{4}}/{{fecha1}}/{{fecha2}}/">4</a></li>
+        <li ng-class="pag==5 ? 'page-item active' : 'page-item'"><a class="page-link" href="#/documentos/{{5}}/{{fecha1}}/{{fecha2}}/">5</a></li>
         <li class="page-item">
-          <a class="page-link" href="#/documentos/{{pag+1}}/" aria-label="Next">
+          <a class="page-link" href="#/documentos/{{pag+1}}/{{fecha1}}/{{fecha2}}/" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
             <span class="sr-only">Next</span>
           </a>
@@ -107,14 +107,20 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title">
-                    <i class="fa fa-check-circle"></i> Documento Electronico <small> - Serie {{fb_cab[17].substr(15,4)}}</small>
+                    <i class="fa fa-check-circle"></i> Documento Electronico
                 </h4>
             </div>
             <div class="modal-body">
+
                 <h2 class="text-xs-center" ng-if="(cla_doc=='FS' || cla_doc=='FR' || cla_doc=='FC')">
-                <i class="fa fa-file-text-o"></i> Factura: {{fb_cab[17].substr(20,8)}}</h2>
-                <h2 class="text-xs-center" ng-if="(cla_doc=='BS' || cla_doc=='BR')"><i class="fa fa-file-text-o"></i> Boleta: 0001-00004789</h2>
-                <h2 class="text-xs-center" ng-if="(cla_doc=='AR' || cla_doc=='AS')"><i class="fa fa-file-text-o"></i> Nota Credito: {{fb_cab[17].substr(15,13)}}</h2>
+                    <i class="fa fa-file-text-o"></i> Factura: {{fb_cab[17].substr(15,13)}}
+                </h2>
+                <h2 class="text-xs-center" ng-if="(cla_doc=='BS' || cla_doc=='BR')">
+                    <i class="fa fa-file-text-o"></i> Boleta: {{fb_cab[17].substr(15,13)}}
+                </h2>
+                <h2 class="text-xs-center" ng-if="(cla_doc=='AR' || cla_doc=='AS')">
+                    <i class="fa fa-file-text-o"></i> Nota Credito: {{fb_cab[17].substr(15,13)}}
+                </h2>
 
 
                 <!-- Factura o Boleta -->
@@ -353,10 +359,10 @@
                     </tr>
                 </table>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+            <div class="modal-footer">                
                 <button type="button" class="btn btn-primary" ng-click="ver(doc,'S','N')"><i class="fa fa-download"></i> Cabezera</button>
                 <button type="button" class="btn btn-success" ng-click="ver(doc,'N','S')"><i class="fa fa-download"></i> Detalle</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
             </div>
             </div>
         </div>
