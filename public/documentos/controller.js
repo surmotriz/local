@@ -55,7 +55,7 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 				// detalle
 				if($scope.co_cr_an=='CO' || $scope.co_cr_an=='CR'){				
 					if ($scope.tip_imp=='D'){
-						$http.get( '/apis/dds/'+$scope.num_doc+'/'+$scope.cla_doc+'/'+$scope.moneda).success(function(data1){
+						$http.get( '/apis/dds/'+$scope.gen+'/'+$scope.emp+'/'+$scope.num_doc+'/'+$scope.cla_doc+'/'+$scope.moneda).success(function(data1){
 							$scope.dds = data1;
 
 							// genera txt det
