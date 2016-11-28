@@ -1,9 +1,11 @@
 app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, FileSaver, Blob){	
 
+	$scope.gen = '02';
+	$scope.emp = '01';
 	$scope.pag = parseInt($stateParams.pag);
 	$scope.fecha1 = $stateParams.fecha1;
 	$scope.fecha2 = $stateParams.fecha2;
-	if($scope.fecha1=='N' && $scope.fecha2=='N'){
+	if($scope.fecha1=='N' && $scope.fecha2=='N'){ 
 		$scope.fecha11= '';
 		$scope.fecha22= '';
 	}else if($scope.fecha1!='N' && $scope.fecha2!='N'){
@@ -11,7 +13,7 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 		$scope.fecha22= $scope.fecha2;
 	}
 
-	$http.get('/apis/docs/'+$scope.pag+'/'+$scope.fecha1+'/'+$scope.fecha2+'/').success(function(data){
+	$http.get('/apis/docs/'+$scope.gen+'/'+$scope.emp+'/'+$scope.pag+'/'+$scope.fecha1+'/'+$scope.fecha2+'/').success(function(data){
 		$scope.docs = data;
 	});
 
@@ -32,7 +34,7 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 
 			// cabezera
 			
-			$http.get( '/apis/fbc/'+$scope.num_doc).success(function(data){
+			$http.get( '/apis/fbc/'+$scope.gen+'/'+$scope.emp+'/'+$scope.num_doc).success(function(data){
 				$scope.fb_cab = data[0];
 							
 				// txt cabezera								
@@ -74,7 +76,7 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 						});
 					}else if ($scope.tip_imp=='R'){ // impresion con resumen
 						if($scope.det=='S'){
-							var deta = 'NIU|0.00|0|0|'+ data[0][19] +'|0.00|0.00|0.00|30|0.00|02|0.00|0.00|';
+							var deta = 'NIU|1.00|||'+ data[0][19] +'|0.00|0.00|0.00|30|0.00|02|0.00|0.00|';
 							var detalle = new File([deta], { type: 'text/plain;charset=utf-8' });
 							FileSaver.saveAs(detalle, data[0][20]);
 						}
@@ -82,7 +84,7 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 					}
 				}else if($scope.co_cr_an=='AN'){ // si es anticipo tiene un detalle
 					if($scope.det=='S'){
-						var deta = 'NIU|0.00|0|0|'+ data[0][18] +'|0.00|0.00|0.00|30|0.00|02|0.00|0.00|';
+						var deta = 'NIU|1.00|||'+ data[0][18] +'|0.00|0.00|0.00|30|0.00|02|0.00|0.00|';
 						var detalle = new File([deta], { type: 'text/plain;charset=utf-8' });
 						FileSaver.saveAs(detalle, data[0][20]);
 					}
@@ -97,7 +99,7 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 		}else if($scope.cla_doc=='AR' || $scope.cla_doc=='AS') { 
 
 			// cabezera
-			$http.get('/apis/ncc/'+$scope.num_doc).success(function(data){
+			$http.get('/apis/ncc/'+$scope.gen+'/'+$scope.emp+'/'+$scope.num_doc).success(function(data){
 				$scope.fb_cab = data[0];
 
 				// genera cabezera txt
@@ -118,7 +120,7 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 				// detalle
 				if($scope.co_cr_an=='CO' || $scope.co_cr_an=='CR'){
 					if ($scope.tip_imp=='D'){
-						$http.get( '/apis/dds/'+$scope.num_doc+'/'+$scope.cla_doc+'/'+$scope.moneda).success(function(data1){
+						$http.get( '/apis/dds/'+$scope.gen+'/'+$scope.emp+'/'+$scope.num_doc+'/'+$scope.cla_doc+'/'+$scope.moneda).success(function(data1){
 							$scope.dds = data1;
 							// genera txt det
 							if($scope.det=='S'){
@@ -138,14 +140,14 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 						});
 					}else if ($scope.tip_imp=='R'){ // impresion con resumen
 						if($scope.det=='S'){
-							var deta = 'NIU|0.00|0|0|'+ data[0][19] +'|0.00|0.00|0.00|30|0.00|02|0.00|0.00|';
+							var deta = 'NIU|1.00|||'+ data[0][19] +'|0.00|0.00|0.00|30|0.00|02|0.00|0.00|';
 							var detalle = new File([deta], { type: 'text/plain;charset=utf-8' });
 							FileSaver.saveAs(detalle, data[0][20]);
 						}
 					}				
 				}else if ($scope.co_cr_an=='AN'){ 
 					if($scope.det=='S'){
-						var deta = 'NIU|0.00|0|0|'+ data[0][18] +'|0.00|0.00|0.00|30|0|02|0|0|';
+						var deta = 'NIU|1.00|||'+ data[0][18] +'|0.00|0.00|0.00|30|0|02|0|0|';
 						var detalle = new File([deta], { type: 'text/plain;charset=utf-8' });
 						FileSaver.saveAs(detalle, data[0][20]);
 					}

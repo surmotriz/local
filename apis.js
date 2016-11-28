@@ -10,11 +10,13 @@ var conexion = {
     connectString : dbConfig.connectString     
 }
 
-router.get('/docs/:pag/:fecha1/:fecha2/', function(req, res){
+router.get('/docs/:gen/:emp/:pag/:fecha1/:fecha2/', function(req, res){
     oracledb.getConnection(conexion, function (err, conexion) {
         conexion.execute(
-            "BEGIN PKG_ELECTRONICA.DOCS(:pag, :fecha1, :fecha2, :docs); END;",
+            "BEGIN PKG_ELECTRONICA.DOCS(:gen, :emp, :pag, :fecha1, :fecha2, :docs); END;",
             {
+                gen: { val: req.params.gen, type:oracledb.STRING },
+                emp: { val: req.params.emp, type:oracledb.STRING },
                 pag: { val: req.params.pag, dir:oracledb.BIND_IN }, 
                 fecha1: { val: req.params.fecha1, type:oracledb.STRING },
                 fecha2: { val: req.params.fecha2, type:oracledb.STRING },                               
@@ -33,11 +35,13 @@ router.get('/docs/:pag/:fecha1/:fecha2/', function(req, res){
 });
 
 
-router.get('/fbc/:num_doc/', function(req, res){
+router.get('/fbc/:gen/:emp/:num_doc/', function(req, res){
     oracledb.getConnection(conexion, function (err, conexion) {
         conexion.execute(
-            "BEGIN PKG_ELECTRONICA.fbc(:num_doc,:fbc); END;",
-            { 
+            "BEGIN PKG_ELECTRONICA.fbc(:gen,:emp,:num_doc,:fbc); END;",
+            {
+                gen: { val: req.params.gen, type:oracledb.STRING },
+                emp: { val: req.params.emp, type:oracledb.STRING },
                 num_doc: { val: req.params.num_doc, dir:oracledb.BIND_IN },                
                 fbc: { type: oracledb.CURSOR, dir: oracledb.BIND_OUT } 
             },
@@ -53,11 +57,13 @@ router.get('/fbc/:num_doc/', function(req, res){
     });
 });
 
-router.get('/ncc/:num_doc/', function(req, res){
+router.get('/ncc/:gen/:emp/:num_doc/', function(req, res){
     oracledb.getConnection(conexion, function (err, conexion) {
         conexion.execute(
-            "BEGIN PKG_ELECTRONICA.ncc(:num_doc,:ncc); END;",
-            { 
+            "BEGIN PKG_ELECTRONICA.ncc(:gen,:emp,:num_doc,:ncc); END;",
+            {
+                gen: { val: req.params.gen, type:oracledb.STRING },
+                emp: { val: req.params.emp, type:oracledb.STRING },
                 num_doc: { val: req.params.num_doc, dir:oracledb.BIND_IN },                
                 ncc: { type: oracledb.CURSOR, dir: oracledb.BIND_OUT } 
             },
@@ -74,11 +80,13 @@ router.get('/ncc/:num_doc/', function(req, res){
 });
 
 // detalle de los documentos dolares y soles
-router.get('/dds/:num_doc/:cla_doc/:moneda/', function(req, res){
+router.get('/dds/:gen/:emp/:num_doc/:cla_doc/:moneda/', function(req, res){
     oracledb.getConnection(conexion, function (err, conexion) {
         conexion.execute(
-            "BEGIN PKG_ELECTRONICA.dds(:num_doc,:cla_doc,:moneda,:dds); END;",
-            { 
+            "BEGIN PKG_ELECTRONICA.dds(:gen,:emp,:num_doc,:cla_doc,:moneda,:dds); END;",
+            {
+                gen: { val: req.params.gen, type:oracledb.STRING },
+                emp: { val: req.params.emp, type:oracledb.STRING },
                 num_doc: { val: req.params.num_doc, dir:oracledb.BIND_IN },
                 cla_doc: { val: req.params.cla_doc, type:oracledb.STRING },                
                 moneda: { val: req.params.moneda, type:oracledb.STRING },                
