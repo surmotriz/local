@@ -17,6 +17,7 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 		$scope.docs = data;
 	});
 
+
 	$scope.ver = function(doc,cab,det){	
 		$scope.num_doc = doc[1];
 		$scope.cla_doc = doc[4];
@@ -27,6 +28,7 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 		$scope.cab = cab;
 		$scope.det = det;
 		$scope.doc = doc;		
+
 		
 
 		// Factura o Boleta
@@ -153,9 +155,15 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 					}
 				} 
 
-			});
+			});			
 			
-		}
+		}		
 
+	};
+
+	$scope.genpdf = function(doc){
+		var doc = new jsPDF();		
+		doc.text('PDF en construccion Surmotriz', 10, 10)
+		doc.save('documento_exportado.pdf')
 	};
 });
