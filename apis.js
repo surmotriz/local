@@ -105,4 +105,27 @@ router.get('/dds/:gen/:emp/:num_doc/:cla_doc/:moneda/', function(req, res){
 });
 
 
+router.get('/baja/:gen/:emp/:num_doc/:cla_doc/', function(req, res){
+    oracledb.getConnection(conexion, function (err, conexion) {
+        conexion.execute(
+            "BEGIN PKG_ELECTRONICA.baja(:gen,:emp,:num_doc,:cla_doc,:baja); END;",
+            {
+                gen: { val: req.params.gen, type:oracledb.STRING },
+                emp: { val: req.params.emp, type:oracledb.STRING },
+                num_doc: { val: req.params.num_doc, dir:oracledb.BIND_IN },
+                cla_doc: { val: req.params.cla_doc, type:oracledb.STRING },
+                baja: { type: oracledb.CURSOR, dir: oracledb.BIND_OUT } 
+            },
+            function (err, result) {
+                result.outBinds.baja.getRows(
+                    1,
+                    function(err, rows){
+                        res.contentType('application/json').send(JSON.stringify(rows));
+                    }
+                )
+            }
+        );
+    });
+});
+
 module.exports = router;

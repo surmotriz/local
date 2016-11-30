@@ -24,11 +24,12 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 		$scope.co_cr_an = doc[5];
 		$scope.exi_fra = doc[6];
 		$scope.tip_imp = doc[7];
-		$scope.moneda = doc[9];		
+		$scope.moneda = doc[9];
+		$scope.anu_sn = doc[12];
+		$scope.doc_anu = doc[13];
 		$scope.cab = cab;
 		$scope.det = det;
-		$scope.doc = doc;		
-
+		$scope.doc = doc;
 		
 
 		// Factura o Boleta
@@ -70,6 +71,8 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 									});
 									deta += '\r\n';
 									i++;
+
+
 								});
 									
 								var detalle = new File([deta], { type: 'text/plain;charset=utf-8' });

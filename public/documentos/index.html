@@ -49,9 +49,11 @@
 			<th>Tipo</th>
             <th>Franq</th>
             <th>Imp</th>
+            <th>sn</th>
+            <th>anu</th>
 			<th class="text-xs-right">Total</th>
             <th>Mon</th>
-			<th class="text-xs-center">Acciones</th>
+			<th class="text-xs-center">Acc</th>
 		</tr>
 		<tr ng-repeat="doc in docs">						
 			<td class="text-xs-left">{{doc[0]}}</td>  
@@ -62,6 +64,8 @@
             <td>{{doc[5]}}</td>   
             <td>{{doc[6]}}</td>   
 			<td class="text-xs-right">{{ doc[7] }}</td> 
+            <td>{{doc[12]}}</td>
+            <td>{{doc[13]}}</td>
             <td>{{doc[8] | number:2 }}</td>
             <td>{{doc[9]}}</td>
 			<td class="text-xs-center">                
@@ -360,7 +364,9 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" ng-click="genpdf(doc)"><i class="fa fa-file-pdf-o"></i> PDF</button>
+                <button type="button" class="btn btn-info" ng-if="anu_sn=='S' && doc_anu=='S'">
+                    <i class="fa fa-trash-o"></i> Baja
+                </button>
                 <button type="button" class="btn btn-primary" ng-click="ver(doc,'S','N')"><i class="fa fa-download"></i> Cabezera</button>
                 <button type="button" class="btn btn-success" ng-click="ver(doc,'N','S')"><i class="fa fa-download"></i> Detalle</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
