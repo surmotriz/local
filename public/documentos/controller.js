@@ -17,8 +17,9 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 		$scope.docs = data;
 	});
 
+	$scope.ver = function(doc,cab,det,rela,adcab,addet,leye){	
+		$scope.doc = doc;
 
-	$scope.ver = function(doc,cab,det){	
 		$scope.num_doc = doc[1];
 		$scope.cla_doc = doc[4];
 		$scope.co_cr_an = doc[5];
@@ -27,20 +28,23 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 		$scope.moneda = doc[9];
 		$scope.anu_sn = doc[12];
 		$scope.doc_anu = doc[13];
+
 		$scope.cab = cab;
-		$scope.det = det;
-		$scope.doc = doc;
+		$scope.det = det;		
+		$scope.rela = rela;
+		$scope.adcab = adcab;
+		$scope.addet = addet;
+		$scope.leye = leye;
 		
 
 		// Factura o Boleta
 		if ($scope.cla_doc=='FS' || $scope.cla_doc=='FR' || $scope.cla_doc=='BS' || $scope.cla_doc=='BR' || $scope.cla_doc=='FC'){ // Factura y Boleta			
 
-			// cabezera
-			
+			// cabezera			
 			$http.get( '/apis/fbc/'+$scope.gen+'/'+$scope.emp+'/'+$scope.num_doc).success(function(data){
 				$scope.fb_cab = data[0];
 							
-				// txt cabezera								
+				// genera txt cabezera								
 				if($scope.cab=='S'){
 					var i=0;
 					var cabe = '';
@@ -49,8 +53,7 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 							cabe += entry+'|';							
 						}
 	    				i++;
-
-					});						
+					});
 					var cabezera = new File([cabe], { type: 'text/plain;charset=utf-8' });
 					FileSaver.saveAs(cabezera, data[0][17]);	
 				}
@@ -161,7 +164,17 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 			});			
 			
 		}		
+	};
 
+	$scope.baja = function(gen,emp,num_doc,cla_doc){
+		//$scope.baja =  return $http.get('/apis/baja/'+gen+'/'+emp+'/'+num_doc+'/'+cla_doc+'/');		
+
+		$http.get('/apis/baja/'+gen+'/'+emp+'/'+num_doc+'/'+cla_doc+'/').then(function(data) {
+		   $scope.bajada == data;
+		});
+
+		console.log($scope.bajada);
+		
 	};
 
 	$scope.genpdf = function(doc){

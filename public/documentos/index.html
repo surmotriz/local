@@ -364,12 +364,18 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-info" ng-if="anu_sn=='S' && doc_anu=='S'">
+                <button type="button" class="btn btn-info" ng-click="baja(gen,emp,num_doc,cla_doc)" ng-if="anu_sn=='S' && doc_anu=='N'">
                     <i class="fa fa-trash-o"></i> Baja
                 </button>
-                <button type="button" class="btn btn-primary" ng-click="ver(doc,'S','N')"><i class="fa fa-download"></i> Cabezera</button>
-                <button type="button" class="btn btn-success" ng-click="ver(doc,'N','S')"><i class="fa fa-download"></i> Detalle</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+                <button type="button" class="btn btn-primary" ng-click="ver(doc,'S','N','N','N','N','N')">
+                    <i class="fa fa-download"></i> Cabezera
+                </button>
+                <button type="button" class="btn btn-success" ng-click="ver(doc,'N','S','N','N','N','N')">
+                    <i class="fa fa-download"></i> Detalle
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fa fa-times"></i> Cerrar
+                </button>
             </div>
             </div>
         </div>
