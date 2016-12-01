@@ -128,4 +128,26 @@ router.get('/baja/:gen/:emp/:num_doc/:cla_doc/', function(req, res){
     });
 });
 
+router.get('/adfbc/:gen/:emp/:num_doc/:cla_doc/', function(req, res){
+    oracledb.getConnection(conexion, function (err, conexion) {
+        conexion.execute(
+            "BEGIN PKG_ELECTRONICA.adfbc(:gen,:emp,:num_doc,:cla_doc,:adfbc); END;",
+            {
+                gen: { val: req.params.gen, type:oracledb.STRING },
+                emp: { val: req.params.emp, type:oracledb.STRING },
+                num_doc: { val: req.params.num_doc, dir:oracledb.BIND_IN },
+                cla_doc: { val: req.params.cla_doc, type:oracledb.STRING },
+                adfbc: { type: oracledb.CURSOR, dir: oracledb.BIND_OUT } 
+            },
+            function (err, result) {
+                result.outBinds.adfbc.getRows(
+                    1,
+                    function(err, rows){
+                        res.contentType('application/json').send(JSON.stringify(rows));
+                    }
+                )
+            }
+        );
+    });
+});
 module.exports = router;
