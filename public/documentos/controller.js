@@ -20,10 +20,14 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 	}
 
 	$http.get('/apis/docs/'+$scope.gen+'/'+$scope.emp+'/'+$scope.pag+'/'+$scope.fecha1+'/'+$scope.fecha2+'/').success(function(data){
+
 		$scope.docs = data;
+		$scope.moises = 'mi nombre';
 	});
 
-	console.log(obtener.holamundo('/apis/docs/'+$scope.gen+'/'+$scope.emp+'/'+$scope.pag+'/'+$scope.fecha1+'/'+$scope.fecha2+'/'))
+	$scope.probando = function(){
+		console.log($scope.moises)
+	}
 
 	$scope.ver = function(doc,cab,det,rela,adcab,addet,leye){	
 		$scope.doc = doc;
