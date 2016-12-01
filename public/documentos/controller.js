@@ -1,4 +1,10 @@
-app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, FileSaver, Blob){	
+app.service('obtener',function($http){
+	this.holamundo = function(url){
+		return $http.get(url)
+	}
+});
+
+app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, FileSaver, Blob, obtener){	
 
 	$scope.gen = '02';
 	$scope.emp = '01';
@@ -16,6 +22,8 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 	$http.get('/apis/docs/'+$scope.gen+'/'+$scope.emp+'/'+$scope.pag+'/'+$scope.fecha1+'/'+$scope.fecha2+'/').success(function(data){
 		$scope.docs = data;
 	});
+
+	console.log(obtener.holamundo('/apis/docs/'+$scope.gen+'/'+$scope.emp+'/'+$scope.pag+'/'+$scope.fecha1+'/'+$scope.fecha2+'/'))
 
 	$scope.ver = function(doc,cab,det,rela,adcab,addet,leye){	
 		$scope.doc = doc;
@@ -167,13 +175,19 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 	};
 
 	$scope.baja = function(gen,emp,num_doc,cla_doc){
-		//$scope.baja =  return $http.get('/apis/baja/'+gen+'/'+emp+'/'+num_doc+'/'+cla_doc+'/');		
+		//$scope.bajada =  $http.get('/apis/baja/'+gen+'/'+emp+'/'+num_doc+'/'+cla_doc+'/').success(function(datos){return 'Hola mundo';});
+		//console.log($scope.bajada);
 
-		$http.get('/apis/baja/'+gen+'/'+emp+'/'+num_doc+'/'+cla_doc+'/').then(function(data) {
-		   $scope.bajada == data;
-		});
+		$http.get('/app/data/events.json').then(function successCallback(response) {
+		      $scope.events = response.data;
+		      console.log($scope.events);
+		  },
+		  function errorCallback(response) {
+		      alert(response);
+		  });
 
-		console.log($scope.bajada);
+			
+		
 		
 	};
 
