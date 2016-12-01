@@ -20,14 +20,10 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 	}
 
 	$http.get('/apis/docs/'+$scope.gen+'/'+$scope.emp+'/'+$scope.pag+'/'+$scope.fecha1+'/'+$scope.fecha2+'/').success(function(data){
-
-		$scope.docs = data;
-		$scope.moises = 'mi nombre';
+		$scope.docs = data;		
 	});
-
-	$scope.probando = function(){
-		console.log($scope.moises)
-	}
+	
+	
 
 	$scope.ver = function(doc,cab,det,rela,adcab,addet,leye){	
 		$scope.doc = doc;
@@ -179,20 +175,14 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 	};
 
 	$scope.baja = function(gen,emp,num_doc,cla_doc){
-		//$scope.bajada =  $http.get('/apis/baja/'+gen+'/'+emp+'/'+num_doc+'/'+cla_doc+'/').success(function(datos){return 'Hola mundo';});
-		//console.log($scope.bajada);
 
-		$http.get('/app/data/events.json').then(function successCallback(response) {
-		      $scope.events = response.data;
-		      console.log($scope.events);
-		  },
-		  function errorCallback(response) {
-		      alert(response);
-		  });
+		$http.get('/apis/baja/'+gen+'/'+emp+'/'+num_doc+'/'+cla_doc+'/').success(function(data) {
+			var arch_baja = data[0][0]+'|'+data[0][1]+'|'+data[0][2]+'|'+data[0][3]+'|'+data[0][4]+'|';
+			var descarga = new File([arch_baja], { type: 'text/plain;charset=utf-8'})
+			FileSaver.saveAs(descarga, data[0][5])
+		    console.log(data[0]);
+		})
 
-			
-		
-		
 	};
 
 	$scope.genpdf = function(doc){

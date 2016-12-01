@@ -37,10 +37,8 @@
               </ul>
             </nav>
         </div>
-    </div>  
-    <input type="" name="" ng-model='moises'>  
-    {{moises}}
-    <a href="#" ng-click='probando()'>nuevo valor</a>
+    </div>
+    
 	<table class="table table-hover table-striped">
 		<tr>
 			<th class="text-xs-center">#</th>
@@ -366,7 +364,7 @@
                 </table>                
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-info" ng-click="baja(gen,emp,num_doc,cla_doc)" ng-if="anu_sn=='S' && doc_anu=='N'">
+                <button type="button" class="btn btn-info" ng-click="baja(gen,emp,num_doc,cla_doc)" ng-if="anu_sn=='S' && doc_anu=='S' && cla_doc !='AR' && cla_doc !='AS'">
                     <i class="fa fa-trash-o"></i> Baja
                 </button>
                 <button type="button" class="btn btn-primary" ng-click="ver(doc,'S','N','N','N','N','N')">
@@ -374,6 +372,9 @@
                 </button>
                 <button type="button" class="btn btn-success" ng-click="ver(doc,'N','S','N','N','N','N')">
                     <i class="fa fa-download"></i> Detalle
+                </button>
+                <button type="button" class="btn btn-warning" ng-click="ver(doc,'S','N','N','N','N','N')">
+                    <i class="fa fa-plus-circle"></i> Adicio Cab
                 </button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                     <i class="fa fa-times"></i> Cerrar
