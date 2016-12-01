@@ -169,11 +169,12 @@ app.controller('documentosIndexCtlr', function($scope, $stateParams, $http, File
 	$scope.baja = function(gen,emp,num_doc,cla_doc){
 		//$scope.baja =  return $http.get('/apis/baja/'+gen+'/'+emp+'/'+num_doc+'/'+cla_doc+'/');		
 
-		$http.get('/apis/baja/'+gen+'/'+emp+'/'+num_doc+'/'+cla_doc+'/').then(function(data) {
-		   $scope.bajada == data;
-		});
+		$scope.bajada2 = $http.get('/apis/baja/'+gen+'/'+emp+'/'+num_doc+'/'+cla_doc+'/').
+	    then(function successCallback(datos){	      
+	      return $scope.bajada2=datos;
+	    });   
 
-		console.log($scope.bajada);
+		console.log($scope.bajada2);
 		
 	};
 
